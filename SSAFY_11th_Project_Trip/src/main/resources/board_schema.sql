@@ -11,15 +11,15 @@ SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,N
 -- -----------------------------------------------------
 -- Schema ssafyweb
 -- -----------------------------------------------------
-CREATE SCHEMA IF NOT EXISTS `ssafyweb` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+CREATE SCHEMA IF NOT EXISTS `ssafyproject` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
 USE `ssafyweb` ;
 
 -- -----------------------------------------------------
 -- Table `ssafyweb`.`members`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ssafyweb`.`members` ;
+DROP TABLE IF EXISTS `ssafyproject`.`members` ;
 
-CREATE TABLE IF NOT EXISTS `ssafyweb`.`members` (
+CREATE TABLE IF NOT EXISTS `ssafyproject`.`members` (
   `user_id` VARCHAR(16) NOT NULL,
   `user_name` VARCHAR(20) NOT NULL,
   `user_password` VARCHAR(16) NOT NULL,
@@ -30,7 +30,7 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-insert into `ssafyweb`.`members` (user_id, user_name, user_password, email, join_date)
+insert into `ssafyproject`.`members` (user_id, user_name, user_password, email, join_date)
 values 	('ssafy', '김싸피', '1234', 'ssafy@naver.com', now()), 
 	('admin', '관리자', '1234', 'admin@naver.com',  now());
 	
@@ -39,9 +39,9 @@ commit;
 -- -----------------------------------------------------
 -- Table `ssafyweb`.`board`
 -- -----------------------------------------------------
-DROP TABLE IF EXISTS `ssafyweb`.`board` ;
+DROP TABLE IF EXISTS `ssafyproject`.`board` ;
 
-CREATE TABLE IF NOT EXISTS `ssafyweb`.`board` (
+CREATE TABLE IF NOT EXISTS `ssafyproject`.`board` (
   `article_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NULL DEFAULT NULL,
   `subject` VARCHAR(100) NULL DEFAULT NULL,

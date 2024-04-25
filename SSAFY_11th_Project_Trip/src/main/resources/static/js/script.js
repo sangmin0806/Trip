@@ -1,23 +1,28 @@
 const wrapper = document.querySelector('.wrapper');
+const modal = document.querySelector('.modal-content');
 const loginLink = document.querySelector('.login-link');
 const registerLink = document.querySelector('.register-link');
 const btnLogin = document.querySelector('.btnLogin-popup');
 const btnLogout = document.querySelector('.btnLogout-popup');
 const iconClose = document.querySelector('.icon-close');
-const root = "http://localhost:8080";
+
  var isLoggedIn = false;
 // 폼이동
 registerLink.addEventListener('click', (event) => {
     deleteInput();
-    wrapper.classList.add('active'); // active 설정 (회원가입 폼으로)
+    wrapper.style.height = '600px';
+    modal.classList.add('active'); // active 설정 (회원가입 폼으로)
 });
 loginLink.addEventListener('click', (event) => {
     deleteInput();
-    wrapper.classList.remove('active'); // active 설정 (login 폼으로)
+    wrapper.style.height = '440px';
+    modal.classList.remove('active'); // active 설정 (login 폼으로)
 });
+
 
 // 로그인 폼 띄우기
 btnLogin.addEventListener('click', (event) => {
+	showModal();
 	deleteInput()
     wrapper.classList.add('active-popup');
 });
@@ -77,6 +82,9 @@ window.onload = function() {
     updateMenu(); // 메뉴 업데이트
 };
 
+function showModal() {
+    document.getElementById('Modal').style.display = 'block';
+}
 // 메뉴 업데이트 함수
 function updateMenu() {
    

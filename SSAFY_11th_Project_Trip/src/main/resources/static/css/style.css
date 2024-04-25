@@ -99,49 +99,53 @@ header {
 
 /* 로그인, 회원가입 시작*/
 .wrapper {
-    position: relative;
+    position: fixed;
     width: 400px;
     height: 440px;
     background: transparent;
+    display: none;
     border: 2px solid rgba(255, 255, 255, 0.5);
     border-radius: 20px;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 30px rgba(0, 0, 0, 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
     overflow: hidden; /* wrapper밖에 다지움 */
     transform: scale(0);
     transition: height 0.2s ease;
 }
 .wrapper.active-popup {
+	display: block;
     transform: scale(1);
 }
-.wrapper.active {
-    height: 520px;
+.modal-content.active {
+    height: 100%;
 }
-.wrapper .form-box {
+.modal-content{
+	display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.modal-content .form-box {
     width: 100%;
     padding: 40px;
 }
 
 /*로그인*/
-.wrapper .form-box.login {
+.modal-content .form-box.login {
     transition: transform 0.18s ease;
     transform: translateX(0);
 }
-.wrapper.active .form-box.login {
+.modal-content.active .form-box.login {
     transition: none;
     transform: translateX(-400px);
 }
 
 /*회원가입*/
-.wrapper .form-box.register {
+.modal-content .form-box.register {
     position: absolute;
     transition: none;
     transform: translateX(400px);
 }
-.wrapper.active .form-box.register {
+.modal-content.active .form-box.register {
     transition: transform 0.18s ease;
     transform: translateX(0);
 }

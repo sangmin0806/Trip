@@ -40,11 +40,11 @@ public class MemberDto {
 		this.userPwd = userPwd;
 	}
 
-	public String getEmailId() {
+	public String getEmail() {
 		return email;
 	}
 
-	public void setEmailId(String email) {
+	public void setEmail(String email) {
 		this.email = email;
 	}
 
@@ -59,8 +59,8 @@ public class MemberDto {
 
 	@Override
 	public String toString() {
-		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", emailId="
-				 + ", emailDomain="  + ", joinDate=" + joinDate + "]";
+		return "MemberDto [userId=" + userId + ", userName=" + userName + ", userPwd=" + userPwd + ", email="
+				 +email + "="  + ", joinDate=" + joinDate + "]";
 	}
 
 }

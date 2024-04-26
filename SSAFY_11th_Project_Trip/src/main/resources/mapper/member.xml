@@ -26,7 +26,7 @@
 	</select>
 
 	<insert id="joinMember" parameterType="memberDto">
-		insert into members (user_name, user_id, user_password, email join_date)
+		insert into members (user_name, user_id, user_password, email, join_date)
 		values (#{userName}, #{userId}, #{userPwd}, #{email}, now())
 	</insert>
 

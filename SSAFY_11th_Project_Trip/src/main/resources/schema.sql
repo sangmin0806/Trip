@@ -71,21 +71,24 @@ CREATE TABLE `GuGun` (
 
 CREATE TABLE `members` (
 	`id`	int	NOT NULL AUTO_INCREMENT	 COMMENT 'Auto Increment',
-	`name`	varchar(45)	NOT NULL,
+	`user_name`	varchar(45)	NOT NULL,
 	`user_id`	varchar(45)	NOT NULL,
-	`password`	varchar(45)	NOT NULL,
+	`user_password`	varchar(45)	NOT NULL,
 	`email`	varchar(200)	NOT NULL,
     `join_date` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
 	`agreeYN`	tinyint(1)	NOT NULL	DEFAULT 0	COMMENT '0: disagree 1: agree',
 	`image_id`	int NULL,
-    PRIMARY KEY (`id`)
-
+    PRIMARY KEY (`id`),
+	UNIQUE KEY `unique_user_id` (`user_id`)
 );
+ALTER TABLE `members`
+ADD UNIQUE INDEX `unique_user_id` (`user_id`);
 
-
--- INSERT INTO `ssafyproject`.`members` (`user_id`, `name`, `password`, `email`, `join_date`, `agreeYN`)
+-- INSERT INTO `ssafyproject`.`members` (`user_id`, `user_name`, `user_password`, `email`, `join_date`, `agreeYN`)
 -- VALUES ('ssafy', '김싸피', '1234', 'ssafy@naver.com', NOW(), 1), 
 --        ('admin', '관리자', '1234', 'admin@naver.com', NOW(), 1);
+
+
 CREATE TABLE IF NOT EXISTS `ssafyproject`.`board` (
   `article_no` INT NOT NULL AUTO_INCREMENT,
   `user_id` VARCHAR(16) NULL DEFAULT NULL,

@@ -5,7 +5,7 @@ const registerLink = document.querySelector('.register-link');
 const btnLogin = document.querySelector('.btnLogin-popup');
 const btnLogout = document.querySelector('.btnLogout-popup');
 const iconClose = document.querySelector('.icon-close');
-
+const root = 'http://localhost:8080';
  var isLoggedIn = false;
 // 폼이동
 registerLink.addEventListener('click', (event) => {
@@ -77,6 +77,44 @@ document.querySelector('#loginBtn').addEventListener('click', async () => {
         console.error('Fetch error:', error);
     }
 });
+//회원가입 폼 보내기
+document.querySelector('#registerBtn').addEventListener('click', async () => {
+    // 로그인 정보 수집
+    let userId = document.querySelector("#userId2").value;
+    let userPwd = document.querySelector("#userPwd2").value;
+    let userName = document.querySelector("#userName").value;
+    let email = document.querySelector("#email").value;
+    console.log(userId);
+    console.log(userPwd);
+
+    // fetch 요청 설정
+    let config = {
+        method: "POST",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify({ "userId": userId, "userPwd": userPwd,"userName": userName,"email": email }),
+    };
+
+    try {
+        const response = await fetch(`${root}/user/join`, config);
+        if (response.ok) {
+			alert("회원가입 성공.");
+            // 회원가입 성공
+        deleteInput();
+         wrapper.style.height = '440px';
+        modal.classList.remove('active');
+         wrapper.classList.remove('active-popup');
+        } else {
+            // 회원가입 실패
+            alert("회원가입 실패.");
+        }
+    } catch (error) {
+        // 네트워크 오류 등으로 인한 요청 실패
+        console.error('Fetch error:', error);
+    }
+});
+
 
 window.onload = function() {
     updateMenu(); // 메뉴 업데이트

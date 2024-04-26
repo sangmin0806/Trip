@@ -51,15 +51,20 @@ public class MemberController {
 	}
 	
 	@PostMapping("/join")
-	public String join(MemberDto memberDto, Model model) {
+	public ResponseEntity<?> join(@RequestBody MemberDto memberDto) {
 		log.debug("memberDto info : {}", memberDto);
 		try {
 			memberService.joinMember(memberDto);
-			return "redirect:/user/login";
+			if (memberDto != null) {
+	            // 회원가입 성공 시
+	            return ResponseEntity.ok().build(); // 성공 응답 (HTTP 상태 코드 200)
+	        } else {
+	            // 회원가입 실패 시
+	            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body("아이디 또는 비밀번호 확인 후 다시 로그인하세요!"); // 실패 응답 (HTTP 상태 코드 401)
+	        }
 		} catch (Exception e) {
 			e.printStackTrace();
-			model.addAttribute("msg", "회원 가입 중 문제 발생!!!");
-			return "error/error";
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("로그인 중 문제 발생!!!"); // 서버 오류 응답 (HTTP 상태 코드 500)
 		}
 	}
 	
@@ -69,7 +74,7 @@ public class MemberController {
 	}
 	
 	@PostMapping("/login")
-	public ResponseEntity<?> login(@RequestBody Map<String, String> map, @RequestParam(name = "saveid", required = false) String saveid, HttpSession session, HttpServletResponse response) {
+	public ResponseEntity<?> login(@RequestBody Map<String, String> map, @RequestParam(name = "saveid", required = false) String saveid, HttpSession session) {
 		log.debug("login map : {}", map);
 		log.debug(saveid);
 		try {

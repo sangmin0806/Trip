@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+	"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
+
+	<resultMap type="tripDto" id="tripInfo">
+		<result column="id" property="id"/>
+		<result column="content_id" property="contentId"/>
+		<result column="content_type_id" property="contentTypeId"/>
+		<result column="type_name" property="typeName"/>
+		<result column="thumbnail_image_id" property="thumbnailImageId"/>
+		<result column="title" property="title"/>
+		<result column="tel" property="tel"/>
+		<result column="description" property="description"/>
+		<result column="sido_code" property="sidoCode"/>
+		<result column="gugun_code" property="gugunCode"/>
+		<result column="sido_name" property="sidoName"/>
+		<result column="gugun_name" property="gugunName"/>
+		<result column="address" property="address"/>
+		<result column="latitude" property="latitude"/>
+		<result column="longitude" property="longitude"/>
+	</resultMap>
+	
+
+	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
+		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address
+		from attraction at
+		join address ad on ad.content_id = at.content_id
+		join content_type ct on at.content_id = ct.content_id
+		join sido s on ad.sido_code = s.sido_code
+		join gugun g on ad.gugun_code = g.gugun_code
+		where s.sido_name = #{sidoName} and g.gugun_name = #{gugunName} and ct.content_type_id = #{contentTypeId}
+		order by ct.content_id desc
+		limit 20
+	</select>
+
+</mapper>

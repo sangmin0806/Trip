@@ -52,6 +52,7 @@ public class MemberController {
 	
 	@PostMapping("/join")
 	public ResponseEntity<?> join(@RequestBody MemberDto memberDto) {
+		System.out.println(memberDto);
 		log.debug("memberDto info : {}", memberDto);
 		try {
 			memberService.joinMember(memberDto);

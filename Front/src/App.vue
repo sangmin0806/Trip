@@ -15,10 +15,21 @@ const user = ref({
   email: "",
   agree:""
 })
+
+function reset() {
+  user.value.userId = "";
+  user.value.userPwd = "";
+  user.value.saveid = false;
+  user.value.userName = "";
+  user.value.email = "";
+  user.value.agree = "";
+}
+
 function login() {
   console.log(user.value)
   loginFormSubmit(user.value,
     (data) => {
+      reset();
       isModalActive.value = false;
       loginFormVisible.value = false;
       isLoggedIn.value = true;
@@ -33,8 +44,7 @@ function logout() {
       isModalActive.value = false;
       loginFormVisible.value = false;
       isLoggedIn.value = false;
-      user.value.userId = "";
-      user.value.userPwd = "";
+      reset();
       user.value.saveid = false;
     },
     (error) => {
@@ -47,6 +57,7 @@ function closeModal() {
 }
 
 function showLoginForm() {
+  reset();
   isModalActive.value = true;
   loginFormVisible.value = true;
   registerFormVisible.value = false;
@@ -55,8 +66,7 @@ function showLoginForm() {
 function showRegisterForm() {
   loginFormVisible.value = false;
   registerFormVisible.value = true;
-  user.value.userId = "";
-  user.value.userPwd = "";
+  reset();
   user.value.saveid = false;
 }
 function register() {
@@ -65,8 +75,7 @@ function register() {
     (data) => {
       loginFormVisible.value = true;
       registerFormVisible.value = false;
-      user.value.userId = "";
-      user.value.userPwd = "";
+      reset();
       user.value.saveid = false;
     },
     (error) => {
@@ -81,7 +90,7 @@ function register() {
       <RouterLink to="/" class="link"><h2 class="logo">Trip</h2></RouterLink>
       <nav class="navigation">
         <RouterLink :to="{name:'board-list'}" class="link">공지사항</RouterLink>
-        <RouterLink :to="{name: 'trip-list'}" class="link">여행지 조회</RouterLink>
+        <RouterLink :to="{name: 'trip'}" class="link">여행지 조회</RouterLink>
         <RouterLink :to="{name: 'trip-recommend'}" class="link" v-if="isLoggedIn"
           >추천 코스</RouterLink
         >
@@ -95,6 +104,7 @@ function register() {
       class="wrapper"
       :class="{ 'active-popup': isModalActive}"
       :style="{ height: registerFormVisible ? '600px' : '440px' }"
+      style="z-index: 9999 ;"
     >
       <div class="modal-content" :class="{ 'active': registerFormVisible } ">
         <span class="icon-close" @click="closeModal"><ion-icon name="close"></ion-icon></span>
@@ -171,6 +181,7 @@ function register() {
         </div>
       </div>
     </div>
+    <RouterView />
   </main>
 </template>
 

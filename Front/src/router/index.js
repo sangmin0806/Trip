@@ -40,12 +40,12 @@ const router = createRouter({
       redirect: { name: 'trip-list' },
       children: [
         {
-          path: '/recommend',
+          path: 'recommend',
           name: 'trip-recommend',
           component: TripRecommend,
         },
         {
-          path: '/list',
+          path: 'list',
           name: 'trip-list',
           component: TripList,
         },

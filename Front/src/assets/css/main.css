@@ -12,7 +12,8 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 100vh;
+  min-height: 120vh;
+  position: relative;
   background: url('../img/trip_01.jpeg') no-repeat;
   background-size: cover;
   background-position: center;
@@ -42,10 +43,11 @@ header {
 }
 /* navbar 시작*/
 .navigation {
-  width: 800px;
+  width: 680px;
   display: flex;
   align-items: center;
   justify-content: center;
+  padding-left: 0px;
 }
 .navigation a {
   position: relative;
@@ -110,6 +112,7 @@ header {
   overflow: hidden; /* wrapper밖에 다지움 */
   transform: scale(0);
   transition: height 0.2s ease;
+  top: 100px;
 }
 .wrapper.active-popup {
   display: block;

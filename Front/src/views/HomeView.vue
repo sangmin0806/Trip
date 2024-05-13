@@ -1,6 +1,6 @@
 <script setup></script>
 
 <template>
-  <main>HomeView</main>
+  <div>HomeView</div>
 </template>
 <style></style>

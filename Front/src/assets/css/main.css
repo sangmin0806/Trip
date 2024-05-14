@@ -12,11 +12,11 @@ main {
   display: flex;
   justify-content: center;
   align-items: center;
-  min-height: 120vh;
+  min-height: 100vh;
   position: relative;
   background: url('../img/trip_01.jpeg') no-repeat;
   background-size: cover;
-  background-position: center;
+  background-position: center top 80%;
 }
 
 header {
@@ -24,11 +24,12 @@ header {
   top: 0;
   left: 0;
   width: 100%;
-  padding: 20px 100px;
+  padding: 14px 100px;
   display: flex;
   justify-content: space-between;
   align-items: center;
   z-index: 99;
+  border-bottom: 3px solid #fff;
 }
 
 .logo {

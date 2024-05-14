@@ -1,43 +1,14 @@
 <script setup>
-import { RouterLink, RouterView } from 'vue-router'
+import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
-import {loginFormSubmit,logoutSubmit,registerFormSubmit} from "@/assets/api/user"
+import Modal from '@/components/user/Modal.vue';
+import { logoutSubmit } from "@/assets/api/user";
+
 const isModalActive = ref(false);
 const loginFormVisible = ref(true);
 const registerFormVisible = ref(false);
 const isLoggedIn = ref(false);
 
-const user = ref({
-  userId: "",
-  userPwd: "",
-  saveid: false,
-  userName: "",
-  email: "",
-  agree:""
-})
-
-function reset() {
-  user.value.userId = "";
-  user.value.userPwd = "";
-  user.value.saveid = false;
-  user.value.userName = "";
-  user.value.email = "";
-  user.value.agree = "";
-}
-
-function login() {
-  console.log(user.value)
-  loginFormSubmit(user.value,
-    (data) => {
-      reset();
-      isModalActive.value = false;
-      loginFormVisible.value = false;
-      isLoggedIn.value = true;
-    },
-    (error) => {
-    }
-  );
-}
 function logout() {
   logoutSubmit(
     (data) => {
@@ -45,42 +16,43 @@ function logout() {
       loginFormVisible.value = false;
       isLoggedIn.value = false;
       reset();
-      user.value.saveid = false;
     },
     (error) => {
+      // Handle error
     }
-  )
-  isModalActive.value = false;
+  );
+}
+function reset() {
+  user.value = {
+    userId: "",
+    userPwd: "",
+    saveid: false,
+    userName: "",
+    email: "",
+    agree: ""
+  };
 }
 function closeModal() {
   isModalActive.value = false;
+  reset();
 }
 
 function showLoginForm() {
-  reset();
   isModalActive.value = true;
   loginFormVisible.value = true;
   registerFormVisible.value = false;
 }
 
-function showRegisterForm() {
+
+function handleLoginSuccess() {
+  isModalActive.value = false;
   loginFormVisible.value = false;
-  registerFormVisible.value = true;
-  reset();
-  user.value.saveid = false;
+  isLoggedIn.value = true;
 }
-function register() {
-  console.log(user.value)
-  registerFormSubmit(user.value,
-    (data) => {
-      loginFormVisible.value = true;
-      registerFormVisible.value = false;
-      reset();
-      user.value.saveid = false;
-    },
-    (error) => {
-    }
-  );
+
+function handleRegisterSuccess() {
+  loginFormVisible.value = true;
+  registerFormVisible.value = false;
 }
 </script>
 
@@ -99,88 +71,16 @@ function register() {
         <button @click="logout" v-if="isLoggedIn" class="btnLogout-popup">Logout</button>
       </nav>
     </header>
-    <div
-      id="Modal"
-      class="wrapper"
-      :class="{ 'active-popup': isModalActive}"
-      :style="{ height: registerFormVisible ? '600px' : '440px' }"
-      style="z-index: 9999 ;"
-    >
-      <div class="modal-content" :class="{ 'active': registerFormVisible } ">
-        <span class="icon-close" @click="closeModal"><ion-icon name="close"></ion-icon></span>
-
-        <div v-if="loginFormVisible" class="form-box login">
-          <h2>Login</h2>
-          <form @submit.prevent="login">
-            <div class="input-box">
-              <span class="icon"><ion-icon name="mail"></ion-icon></span>
-              <input type="text" id="userId" v-model="user.userId" name="userId" required />
-              <label>ID</label>
-            </div>
-            <div class="input-box">
-              <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-              <input type="password" id="userPwd" v-model="user.userPwd" name="userPwd" required />
-              <label>Password</label>
-            </div>
-            <div class="remember-forgot">
-              <label
-                ><input type="checkbox" id="saveid" v-model="user.saveid" name="saveid" /> Remember
-                me</label
-              >
-              <a href="#">Forgot Password?</a>
-            </div>
-            <button type="submit" class="btn" id="loginBtn">Login</button>
-            <div class="login-register">
-              <p>
-                Don't have an account?<a href="#" class="register-link" @click="showRegisterForm">
-                  Register
-                </a>
-              </p>
-            </div>
-          </form>
-        </div>
-
-        <div v-if="registerFormVisible" class="form-box register">
-          <h2>Registration</h2>
-          <form @submit.prevent="register">
-            <div class="input-box">
-              <span class="icon"><ion-icon name="person"></ion-icon></span>
-              <input type="text" id="userId2" v-model="user.userId" name="userId" required />
-              <label>ID</label>
-            </div>
-            <div class="input-box">
-              <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-              <input type="password" id="userPwd2" v-model="user.userPwd" name="userPwd" required />
-              <label>Password</label>
-            </div>
-            <div class="input-box">
-              <span class="icon"><ion-icon name="person"></ion-icon></span>
-              <input type="text" id="userName" v-model="user.userName" name="userName" required />
-              <label>Username</label>
-            </div>
-            <div class="input-box">
-              <span class="icon"><ion-icon name="mail"></ion-icon></span>
-              <input type="email" id="email" name="email" v-model="user.email" required />
-              <label>Email</label>
-            </div>
-            <div class="remember-forgot">
-              <label
-                ><input type="checkbox" v-model="user.agree" /> I agree to the terms &
-                conditions</label
-              >
-            </div>
-            <button type="button" class="btn" id="registerBtn" @click="register">Register</button>
-            <div class="login-register">
-              <p>
-                Already have an account?<a href="#" class="login-link" @click="showLoginForm">
-                  Login
-                </a>
-              </p>
-            </div>
-          </form>
-        </div>
-      </div>
-    </div>
+    <Modal
+      :isActive="isModalActive"
+      :loginFormVisible="loginFormVisible"
+      :registerFormVisible="registerFormVisible"
+      @update:loginFormVisible="loginFormVisible = $event"
+      @update:registerFormVisible="registerFormVisible = $event"
+      @close="closeModal"
+      @loginSuccess="handleLoginSuccess"
+      @registerSuccess="handleRegisterSuccess"
+    />
     <RouterView />
   </main>
 </template>

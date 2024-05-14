@@ -3,6 +3,7 @@ import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { useRouter } from "vue-router";
 import { ref,onMounted } from 'vue';
 import TripSelect from "./TripSelect.vue";
+import SideBar from "./SideBar.vue";
 const lat = ref(37.566826);
 const lng = ref(126.9786567);
 const map = ref();
@@ -58,7 +59,8 @@ const changeKey = (val) => {
 
 <template>
   <div class="container">
-    <div class="row justify-content-center">
+    <SideBar />
+    <!-- <div class="row justify-content-center">
       <div class="col-lg-10">
         <div class="row col-md-12 align-self-center mb-2 py-2 justify-content-between">
           <div class="col-md-2 text-start">
@@ -93,23 +95,39 @@ const changeKey = (val) => {
           </div>
         </div>
       </div>
-    </div>
+    </div> -->
+    <KakaoMap
+      :lat="lat"
+      :lng="lng"
+      @onLoadKakaoMap="onLoadKakaoMap"
+      :draggable="true"
+      class="kakao-map"
+    >
+      <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
+    </KakaoMap>
   </div>
-  <KakaoMap
-    :lat="lat"
-    :lng="lng"
-    @onLoadKakaoMap="onLoadKakaoMap"
-    :draggable="true"
-    class="kakao-map"
-  >
-    <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
-  </KakaoMap>
 </template>
 
 <style scoped>
+.container{
+  padding: 80px 0 0;
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  left : 0;
+  width: 100%;
+  height: 100%;
+  max-width: 2000px;
+  max-height: 100%;
+}
+@media (max-width: 1000px) {
+  .container {
+    max-width: 100%;
+
+  }
+}
 .kakao-map{
   width: 100% !important;
   height: 100% !important;
-  margin-bottom: 50px;
 }
 </style>

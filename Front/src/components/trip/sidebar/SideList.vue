@@ -1,8 +1,14 @@
 <script setup>
-import { ref } from 'vue';
-
+import { ref, defineProps } from 'vue';
+import ListItem from './ListItem.vue';
 const sidebarActive = ref(false);
-
+const props = defineProps({
+    response: {
+        type: Object,
+        required: true,
+    },
+    title: String,
+});
 const toggleSidebar = () => {
     sidebarActive.value = !sidebarActive.value;
 };
@@ -11,14 +17,15 @@ const toggleSidebar = () => {
 <template>
     <div class="sidebar" :class="{ active: sidebarActive }">
         <div class="logo-menu">
-            <h2 class="logo">검색</h2>
+            <h2 class="logo" v-if="title">{{ title }}</h2>
         </div>
-    </div>
-    <div class="toggle-btn-container" :class="{ active: sidebarActive }">
         <i
             :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
             @click="toggleSidebar"
         ></i>
+        <ul v-if="response">
+            <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
+        </ul>
     </div>
 </template>
 

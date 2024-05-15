@@ -42,7 +42,7 @@ public class TripController {
 		this.tripService = tripService;
 	}
 
-	@GetMapping("/list")
+	@PostMapping("/list")
 	public ResponseEntity<?> list(@RequestBody Map<String, String> map) throws Exception {
 		log.debug("list : {}", map);
 	    List<TripDto> list = tripService.listTripInfo(map);

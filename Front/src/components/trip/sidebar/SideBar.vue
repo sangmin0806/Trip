@@ -1,10 +1,29 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, defineEmits } from 'vue';
 
 const sidebarActive = ref(false);
-
+const searchInput = ref('');
+const emit = defineEmits(['search']);
 const toggleSidebar = () => {
     sidebarActive.value = !sidebarActive.value;
+};
+
+const items = [
+    { name: '관광지', id: 12 },
+    { name: '문화시설', id: 14 },
+    { name: '축제공연행사', id: 15 },
+    { name: '여행코스', id: 25 },
+    { name: '레포츠', id: 28 },
+    { name: '숙박', id: 32 },
+    { name: '쇼핑', id: 38 },
+    { name: '음식점', id: 39 },
+    { name: 'e', id: 9 },
+];
+const search = () => {
+    if (searchInput.value.trim() === '') {
+        return;
+    }
+    emit('search', searchInput.value);
 };
 </script>
 
@@ -17,59 +36,23 @@ const toggleSidebar = () => {
 
         <ul class="list">
             <li class="list-item" id="search">
-                <a href="#">
+                <a href="#" :style="{ '--i': 1 }">
                     <i class="bx bx-search"></i>
-                    <input type="text" class="link-name" placeholder="장소 검색" />
+                    <input
+                        type="text"
+                        v-model="searchInput"
+                        @keyup.enter="search"
+                        class="link-name"
+                        required
+                        placeholder="장소 검색"
+                    />
                 </a>
             </li>
-            <li class="list-item">
-                <a href="#"> <i class="bx bx-grid-alt"></i> <span class="link-name" style="--i: 1">관광지</span></a>
-            </li>
-
-            <li class="list-item">
-                <a href="#"> <i class="bx bx-grid-alt"></i> <span class="link-name" style="--i: 2">문화시설</span></a>
-            </li>
-            <li class="list-item">
-                <a href="#">
+            <li class="list-item" v-for="(item, index) in items" :key="index" :style="{ '--i': index + 2 }">
+                <a href="#" @click.prevent="handleClick(item)">
                     <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 3">축제공연행사</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 4">여행코스</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 5">레포츠</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 6">숙박</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 7">쇼핑</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 8">음식점</span></a
-                >
-            </li>
-            <li class="list-item">
-                <a href="#">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name" style="--i: 9">e</span></a
-                >
+                    <span class="link-name">{{ item.name }}</span>
+                </a>
             </li>
         </ul>
     </nav>

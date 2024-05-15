@@ -37,22 +37,13 @@
     opacity: 1;
     transition-delay: 0.2s;
 }
-.toggle-btn-container {
-    position: absolute;
+
+.sidebar .toggle-btn {
+    position: fixed;
+    top: 40%;
     z-index: 9999;
-    width: 20px;
-    height: 40px;
-    top: 50%;
-    left: 20.8%;
-    transition: 0.5s;
-}
-.toggle-btn-container.active {
-    left: 40.7%;
-    transition: 0.5s;
-}
-.toggle-btn {
-    z-index: 9999;
-    left: 25px;
+    margin-left: 10px;
+    left: 100%;
     align-items: center;
     transform: translateX(-50%);
     width: 20px;

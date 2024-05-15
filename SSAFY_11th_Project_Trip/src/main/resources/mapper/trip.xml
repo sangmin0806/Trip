@@ -21,8 +21,7 @@
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
 	</resultMap>
-	
-
+	<!--
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
 		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address
 		from attraction at
@@ -31,6 +30,21 @@
 		join sido s on ad.sido_code = s.sido_code
 		join gugun g on ad.gugun_code = g.gugun_code
 		where s.sido_name = #{sidoName} and g.gugun_name = #{gugunName} and ct.content_type_id = #{contentTypeId}
+		order by ct.content_id desc
+		limit 20
+	</select>
+	  -->
+	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
+		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address,
+		ST_DISTANCE_SPHERE(
+        	POINT(ad.longitude, ad.latitude),
+        	POINT(#{longitude}, #{latitude})
+    	) AS distance
+		from attraction at
+		join address ad on ad.content_id = at.content_id
+		join content_type ct on at.content_id = ct.content_id
+		where at.title like concat('%', #{title}, '%')
+		having distance &lt;1000
 		order by ct.content_id desc
 		limit 20
 	</select>

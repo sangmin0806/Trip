@@ -5,9 +5,14 @@ const sidebarActive = ref(false);
 const props = defineProps({
     response: {
         type: Object,
-        required: true,
+        required: false,
+        default: () => ({ data: [] }),
     },
-    title: String,
+    input: {
+        type: String,
+        required: false,
+        default: '',
+    },
 });
 const toggleSidebar = () => {
     sidebarActive.value = !sidebarActive.value;
@@ -15,18 +20,18 @@ const toggleSidebar = () => {
 </script>
 
 <template>
-    <div class="sidebar" :class="{ active: sidebarActive }">
-        <div class="logo-menu">
-            <h2 class="logo" v-if="title">{{ title }}</h2>
-        </div>
-        <i
-            :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
-            @click="toggleSidebar"
-        ></i>
-        <ul v-if="response">
-            <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
-        </ul>
+  <div class="sidebar" :class="{ active: sidebarActive }">
+    <div class="logo-menu">
+      <h2 class="logo">{{ input }}</h2>
     </div>
+    <i
+      :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
+      @click="toggleSidebar"
+    ></i>
+    <ul>
+      <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
+    </ul>
+  </div>
 </template>
 
 <style scoped>

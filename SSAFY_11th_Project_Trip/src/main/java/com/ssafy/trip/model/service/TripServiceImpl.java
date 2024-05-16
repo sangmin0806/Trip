@@ -20,7 +20,7 @@ public class TripServiceImpl implements TripService {
 		this.tripMapper = tripMapper;
 	}
 	@Override
-	public List<TripDto> listTripInfo(Map<String, String> map) throws Exception {
+	public List<TripDto> listTripInfo(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return tripMapper.listTripInfo(map);
 	}

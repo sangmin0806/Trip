@@ -11,13 +11,13 @@ const lng = ref(126.9786567);
 const map = ref();
 const router = useRouter();
 const tripList = ref([]);
-const searchResponse = ref(null);
+const searchResponse = ref({ input: '', response: { data: [] } });
 const onLoadKakaoMap = (mapRef) => {
     map.value = mapRef;
 };
-function searchHandle(title) {
+function searchHandle(input) {
     const param = {
-        title: title,
+        input: input,
         latitude: lat.value,
         longitude: lng.value,
     };
@@ -26,7 +26,28 @@ function searchHandle(title) {
         (response) => {
             console.log(response);
             searchResponse.value = {
-                title: param.title,
+                input: param.input,
+                response: response,
+            };
+        },
+        (error) => {
+            console.error(error);
+        }
+    );
+}
+function itemClickHandle(data) {
+    const param = {
+        input: data.input,
+        latitude: lat.value,
+        longitude: lng.value,
+        contentTypeId:data.contentTypeId
+    };
+    search(
+        param,
+        (response) => {
+            console.log(response);
+            searchResponse.value = {
+                input: param.input,
                 response: response,
             };
         },
@@ -38,15 +59,21 @@ function searchHandle(title) {
 </script>
 
 <template>
-    <div class="container">
-        <div>
-            <SideBar @search="searchHandle" />
-            <side-list v-if="searchResponse" :title="searchResponse.title" :response="searchResponse.response" />
-        </div>
-        <KakaoMap :lat="lat" :lng="lng" @onLoadKakaoMap="onLoadKakaoMap" :draggable="true" class="kakao-map">
-            <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
-        </KakaoMap>
+  <div class="container">
+    <div>
+      <SideBar @search="searchHandle" @itemClick="itemClickHandle" />
+      <side-list :input="searchResponse.input" :response="searchResponse.response" />
     </div>
+    <KakaoMap
+      :lat="lat"
+      :lng="lng"
+      @onLoadKakaoMap="onLoadKakaoMap"
+      :draggable="true"
+      class="kakao-map"
+    >
+      <KakaoMapMarker :lat="lat" :lng="lng"></KakaoMapMarker>
+    </KakaoMap>
+  </div>
 </template>
 
 <style scoped>

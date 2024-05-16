@@ -3,7 +3,7 @@ import { ref, defineEmits } from 'vue';
 
 const sidebarActive = ref(false);
 const searchInput = ref('');
-const emit = defineEmits(['search']);
+const emit = defineEmits(['search','itemClick']);
 const toggleSidebar = () => {
     sidebarActive.value = !sidebarActive.value;
 };
@@ -25,37 +25,45 @@ const search = () => {
     }
     emit('search', searchInput.value);
 };
+const handleClick = (item) => {
+    emit('itemClick', { input: searchInput.value, contentTypeId: item.id });
+};
 </script>
 
 <template>
-    <nav class="sidebar" :class="{ active: sidebarActive }">
-        <div class="logo-menu">
-            <h2 class="logo">검색</h2>
-            <i class="bx bx-menu toggle-btn" @click="toggleSidebar"></i>
-        </div>
+  <nav class="sidebar" :class="{ active: sidebarActive }">
+    <div class="logo-menu">
+      <h2 class="logo">검색</h2>
+      <i class="bx bx-menu toggle-btn" @click="toggleSidebar"></i>
+    </div>
 
-        <ul class="list">
-            <li class="list-item" id="search">
-                <a href="#" :style="{ '--i': 1 }">
-                    <i class="bx bx-search"></i>
-                    <input
-                        type="text"
-                        v-model="searchInput"
-                        @keyup.enter="search"
-                        class="link-name"
-                        required
-                        placeholder="장소 검색"
-                    />
-                </a>
-            </li>
-            <li class="list-item" v-for="(item, index) in items" :key="index" :style="{ '--i': index + 2 }">
-                <a href="#" @click.prevent="handleClick(item)">
-                    <i class="bx bx-grid-alt"></i>
-                    <span class="link-name">{{ item.name }}</span>
-                </a>
-            </li>
-        </ul>
-    </nav>
+    <ul class="list">
+      <li class="list-item" id="search">
+        <a href="#" :style="{ '--i': 1 }">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            v-model="searchInput"
+            @keyup.enter="search"
+            class="link-name"
+            required
+            placeholder="장소 검색"
+          />
+        </a>
+      </li>
+      <li
+        class="list-item"
+        v-for="(item, index) in items"
+        :key="index"
+        :style="{ '--i': index + 2 }"
+      >
+        <a href="#" @click.prevent="handleClick(item)">
+          <i class="bx bx-grid-alt"></i>
+          <span class="link-name">{{ item.name }}</span>
+        </a>
+      </li>
+    </ul>
+  </nav>
 </template>
 
 <style scoped>

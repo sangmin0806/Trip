@@ -1,11 +1,17 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
+import { useSidelistStore,useSidebarStore } from '@/stores/sidebar.js';
 
 const sidebarActive = ref(false);
 const searchInput = ref('');
-const emit = defineEmits(['search','itemClick']);
+const emit = defineEmits(['search', 'itemClick']);
+const sidelistStore = useSidelistStore();
+const sidebarStore = useSidebarStore();
+
 const toggleSidebar = () => {
     sidebarActive.value = !sidebarActive.value;
+    sidelistStore.setSidelistActive(sidebarActive.value);
+    sidebarStore.setSidebarActive(!sidebarActive.value)
 };
 
 const items = [
@@ -20,9 +26,6 @@ const items = [
     { name: 'e', id: 9 },
 ];
 const search = () => {
-    if (searchInput.value.trim() === '') {
-        return;
-    }
     emit('search', searchInput.value);
 };
 const handleClick = (item) => {

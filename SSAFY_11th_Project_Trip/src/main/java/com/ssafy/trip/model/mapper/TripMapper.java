@@ -11,4 +11,5 @@ import com.ssafy.trip.model.TripDto;
 @Mapper
 public interface TripMapper {
 	List<TripDto> listTripInfo(Map<String, Object> map) throws SQLException;
+	Map<String, Object> locationInfo(Map<String, Object> map) throws SQLException;
 }

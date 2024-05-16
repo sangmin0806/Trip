@@ -7,5 +7,5 @@ import java.util.Map;
 import com.ssafy.trip.model.TripDto;
 
 public interface TripService {
-	List<TripDto> listTripInfo(Map<String, String> map) throws Exception;
+	List<TripDto> listTripInfo(Map<String, Object> map) throws Exception;
 }

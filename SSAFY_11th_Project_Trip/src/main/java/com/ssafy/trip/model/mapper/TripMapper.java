@@ -10,5 +10,5 @@ import org.apache.ibatis.annotations.Mapper;
 import com.ssafy.trip.model.TripDto;
 @Mapper
 public interface TripMapper {
-	List<TripDto> listTripInfo(Map<String, String> map) throws SQLException;
+	List<TripDto> listTripInfo(Map<String, Object> map) throws SQLException;
 }

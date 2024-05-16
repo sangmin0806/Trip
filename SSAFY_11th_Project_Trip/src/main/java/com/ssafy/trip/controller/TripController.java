@@ -43,8 +43,13 @@ public class TripController {
 	}
 
 	@PostMapping("/list")
-	public ResponseEntity<?> list(@RequestBody Map<String, String> map) throws Exception {
+	public ResponseEntity<?> list(@RequestBody Map<String, Object> map) throws Exception {
 		log.debug("list : {}", map);
+		String input = (String) map.get("input");
+		if (input != null && !input.isEmpty()) {
+	        String[] keywords = input.split("\\s+");
+	        map.put("keywords", keywords);
+	    }
 	    List<TripDto> list = tripService.listTripInfo(map);
 	    log.debug("list : {}", list);
 	    return new ResponseEntity<>(list, HttpStatus.OK);

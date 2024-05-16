@@ -43,7 +43,14 @@
 		from attraction at
 		join address ad on ad.content_id = at.content_id
 		join content_type ct on at.content_id = ct.content_id
-		where at.title like concat('%', #{title}, '%')
+		<where>
+		    <foreach collection="keywords" item="keyword" open="(" separator=" and " close=")">
+		            ad.address like concat('%', #{keyword}, '%')
+		     </foreach>
+		     <if test="contentTypeId != null">
+            	and ct.content_type_id = #{contentTypeId}
+        	</if>
+		</where>
 		having distance &lt;1000
 		order by ct.content_id desc
 		limit 20

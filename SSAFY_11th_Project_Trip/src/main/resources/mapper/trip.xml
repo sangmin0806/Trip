@@ -44,9 +44,11 @@
 		join address ad on ad.content_id = at.content_id
 		join content_type ct on at.content_id = ct.content_id
 		<where>
-		    <foreach collection="keywords" item="keyword" open="(" separator=" and " close=")">
-		            ad.address like concat('%', #{keyword}, '%')
-		     </foreach>
+			<if test="input != ''">
+			    <foreach collection="keywords" item="keyword" open="(" separator=" and " close=")">
+			            ad.address like concat('%', #{keyword}, '%')
+			     </foreach>
+			</if>
 		     <if test="contentTypeId != null">
             	and ct.content_type_id = #{contentTypeId}
         	</if>

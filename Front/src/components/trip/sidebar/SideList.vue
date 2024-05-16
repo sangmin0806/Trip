@@ -1,7 +1,8 @@
 <script setup>
 import { ref, defineProps } from 'vue';
+import {useSidebarStore } from '@/stores/sidebar.js';
 import ListItem from './ListItem.vue';
-const sidebarActive = ref(false);
+const store = useSidebarStore();
 const props = defineProps({
     response: {
         type: Object,
@@ -15,17 +16,17 @@ const props = defineProps({
     },
 });
 const toggleSidebar = () => {
-    sidebarActive.value = !sidebarActive.value;
+    store.toggleSidebar(); // Pinia store의 toggleSidebar 액션 호출
 };
 </script>
 
 <template>
-  <div class="sidebar" :class="{ active: sidebarActive }">
+  <div class="sidebar" :class="{ active: store.sidebarActive }">
     <div class="logo-menu">
       <h2 class="logo">{{ input }}</h2>
     </div>
     <i
-      :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
+      :class="['toggle-btn', store.sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
       @click="toggleSidebar"
     ></i>
     <ul>

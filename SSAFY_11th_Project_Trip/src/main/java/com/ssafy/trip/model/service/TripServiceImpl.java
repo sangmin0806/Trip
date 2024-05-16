@@ -24,5 +24,10 @@ public class TripServiceImpl implements TripService {
 		// TODO Auto-generated method stub
 		return tripMapper.listTripInfo(map);
 	}
+	@Override
+	public Map<String, Object> locationInfo(Map<String, Object> map) throws Exception {
+		// TODO Auto-generated method stub
+		return tripMapper.locationInfo(map);
+	}
 
 }

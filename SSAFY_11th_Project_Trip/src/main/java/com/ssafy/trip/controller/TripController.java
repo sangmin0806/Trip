@@ -41,7 +41,18 @@ public class TripController {
 		super();
 		this.tripService = tripService;
 	}
-
+	@PostMapping("/location")
+	public ResponseEntity<?> location(@RequestBody Map<String, Object> map) throws Exception {
+		String input = (String) map.get("input");
+		if (input != null  && !input.isEmpty()) {
+	        String[] keywords = input.split("\\s+");
+	        map.put("keywords", keywords);
+	    }
+		log.debug("map : {}", map);
+		Map<String, Object> info = tripService.locationInfo(map);
+	    log.debug("list : {}", info);
+	    return new ResponseEntity<>(info, HttpStatus.OK);
+	}
 	@PostMapping("/list")
 	public ResponseEntity<?> list(@RequestBody Map<String, Object> map) throws Exception {
 		String input = (String) map.get("input");

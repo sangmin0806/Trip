@@ -4,7 +4,7 @@ import { useRouter } from 'vue-router';
 
 import {useSidebarStore,useSidelistStore  } from '@/stores/sidebar.js';
 import { ref } from 'vue';
-import { search } from '@/assets/api/trip/tripSearch.js';
+import { search, getLocation } from '@/assets/api/trip/tripSearch.js';
 
 import SideBar from './sidebar/SideBar.vue';
 import SideList from './sidebar/SideList.vue';
@@ -28,7 +28,6 @@ const onLoadKakaoMap = (mapRef) => {
 const placesSearchCB = (data) => {
     markerList.value = [];
     const bounds = new kakao.maps.LatLngBounds();
-
     for (let marker of data) {
       const markerItem = {
         lat: marker.latitude,
@@ -53,8 +52,18 @@ const onClickMapMarker = (markerItem) => {
   }
 };
 
-function searchHandle(input) {
+async function searchHandle(input) {
     sidebarStore.setSidebarActive(true);
+    const locateParam = {
+        input: input,
+    };
+    try {
+        const location = await getLocation(locateParam);
+        lat.value = location.latitude;
+        lng.value = location.longitude;
+    } catch (error) {
+        console.error(error);
+    }
     const param = {
         input: input,
         latitude: lat.value,
@@ -75,8 +84,18 @@ function searchHandle(input) {
         }
     );
 }
-function itemClickHandle(data) {
+async function itemClickHandle(data) {
     sidebarStore.setSidebarActive(true);
+    const locateParam = {
+        input: data.input,
+    };
+    try {
+        const location = await getLocation(locateParam);
+        lat.value = location.latitude;
+        lng.value = location.longitude;
+    } catch (error) {
+        console.error(error);
+    }
     const param = {
         input: data.input,
         latitude: lat.value,

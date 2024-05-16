@@ -34,6 +34,18 @@
 		limit 20
 	</select>
 	  -->
+	  <select id="locationInfo" parameterType="map">
+		select latitude, longitude
+		from locations
+		<where>
+			<if test="input != ''">
+			    <foreach collection="keywords" item="keyword" open="(" separator=" and " close=")">
+			            city like concat('%', #{keyword}, '%')
+			     </foreach>
+			</if>
+		</where>
+		LIMIT 1
+	</select>
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
 		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address,
 		ST_DISTANCE_SPHERE(

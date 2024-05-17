@@ -104,13 +104,13 @@ public class BoardServiceImpl implements BoardService {
 	@Transactional
 	public void deleteArticle(int articleNo, String path) throws Exception {
 		// TODO : BoardDaoImpl의 deleteArticle 호출
-		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
-		boardMapper.deleteFile(articleNo);
+//		List<FileInfoDto> fileList = boardMapper.fileInfoList(articleNo);
+//		boardMapper.deleteFile(articleNo);
 		boardMapper.deleteArticle(articleNo);
-		for(FileInfoDto fileInfoDto : fileList) {
-			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
-			file.delete();
-		}
+//		for(FileInfoDto fileInfoDto : fileList) {
+//			File file = new File(path + File.separator + fileInfoDto.getSaveFolder() + File.separator + fileInfoDto.getSaveFile());
+//			file.delete();
+//		}
 	}
 
 }

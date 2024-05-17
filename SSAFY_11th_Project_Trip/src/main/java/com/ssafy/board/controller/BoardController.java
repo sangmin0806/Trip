@@ -10,12 +10,18 @@ import java.util.Map;
 import java.util.UUID;
 
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
@@ -30,7 +36,7 @@ import jakarta.servlet.http.HttpSession;
 import lombok.extern.slf4j.Slf4j;
 
 @Slf4j
-@Controller
+@RestController
 @RequestMapping("/article")
 public class BoardController {
 
@@ -64,102 +70,120 @@ public class BoardController {
 		return "board/write";
 	}
 
+//	@PostMapping("/write")
+//	public String write(BoardDto boardDto, @RequestParam("upfile") MultipartFile[] files, HttpSession session,
+//			RedirectAttributes redirectAttributes) throws Exception {
+//		log.debug("write boardDto : {}", boardDto);
+//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//		boardDto.setUserId(memberDto.getUserId());
+//
+////		FileUpload 관련 설정.
+//		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath, uploadFilePath);
+//		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
+//		if (!files[0].isEmpty()) {
+////			String realPath = servletContext.getRealPath(UPLOAD_PATH);
+////			String realPath = servletContext.getRealPath("/resources/img");
+//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
+//			String saveFolder = uploadPath + File.separator + today;
+//			log.debug("저장 폴더 : {}", saveFolder);
+//			File folder = new File(saveFolder);
+//			if (!folder.exists())
+//				folder.mkdirs();
+//			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
+//			for (MultipartFile mfile : files) {
+//				FileInfoDto fileInfoDto = new FileInfoDto();
+//				String originalFileName = mfile.getOriginalFilename();
+//				if (!originalFileName.isEmpty()) {
+//					String saveFileName = UUID.randomUUID().toString()
+//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
+//					fileInfoDto.setSaveFolder(today);
+//					fileInfoDto.setOriginalFile(originalFileName);
+//					fileInfoDto.setSaveFile(saveFileName);
+//					log.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
+//					mfile.transferTo(new File(folder, saveFileName));
+//				}
+//				fileInfos.add(fileInfoDto);
+//			}
+//			boardDto.setFileInfos(fileInfos);
+//		}
+//
+//		boardService.writeArticle(boardDto);
+//		redirectAttributes.addAttribute("pgno", "1");
+//		redirectAttributes.addAttribute("key", "");
+//		redirectAttributes.addAttribute("word", "");
+//		return "redirect:/article/list";
+//	}
 	@PostMapping("/write")
-	public String write(BoardDto boardDto, @RequestParam("upfile") MultipartFile[] files, HttpSession session,
-			RedirectAttributes redirectAttributes) throws Exception {
-		log.debug("write boardDto : {}", boardDto);
-		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-		boardDto.setUserId(memberDto.getUserId());
+    public String write(@RequestBody BoardDto boardDto, HttpSession session) throws Exception {
+        log.debug("Received boardDto : {}", boardDto);
 
-//		FileUpload 관련 설정.
-		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath, uploadFilePath);
-		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
-		if (!files[0].isEmpty()) {
-//			String realPath = servletContext.getRealPath(UPLOAD_PATH);
-//			String realPath = servletContext.getRealPath("/resources/img");
-			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-			String saveFolder = uploadPath + File.separator + today;
-			log.debug("저장 폴더 : {}", saveFolder);
-			File folder = new File(saveFolder);
-			if (!folder.exists())
-				folder.mkdirs();
-			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-			for (MultipartFile mfile : files) {
-				FileInfoDto fileInfoDto = new FileInfoDto();
-				String originalFileName = mfile.getOriginalFilename();
-				if (!originalFileName.isEmpty()) {
-					String saveFileName = UUID.randomUUID().toString()
-							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-					fileInfoDto.setSaveFolder(today);
-					fileInfoDto.setOriginalFile(originalFileName);
-					fileInfoDto.setSaveFile(saveFileName);
-					log.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-					mfile.transferTo(new File(folder, saveFileName));
-				}
-				fileInfos.add(fileInfoDto);
-			}
-			boardDto.setFileInfos(fileInfos);
-		}
+        // 세션에서 사용자 정보를 가져와서 DTO에 사용자 ID 설정
+//        MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
+//        boardDto.setUserId(memberDto.getUserId());
 
-		boardService.writeArticle(boardDto);
-		redirectAttributes.addAttribute("pgno", "1");
-		redirectAttributes.addAttribute("key", "");
-		redirectAttributes.addAttribute("word", "");
-		return "redirect:/article/list";
-	}
+        // 게시글을 데이터베이스에 저장하는 로직 호출
+        boardService.writeArticle(boardDto);
+
+        // 성공적으로 게시글을 등록했다는 메시지 반환
+        return "Article posted successfully";
+    }
+
 
 	@GetMapping("/list")
-	public ModelAndView list(@RequestParam Map<String, String> map) throws Exception {
-		log.debug("list parameter pgno : {}", map.get("pgno"));
-		ModelAndView mav = new ModelAndView();
-		List<BoardDto> list = boardService.listArticle(map);
-		PageNavigation pageNavigation = boardService.makePageNavigation(map);
-		mav.addObject("articles", list);
-		mav.addObject("navigation", pageNavigation);
-		mav.addObject("pgno", map.get("pgno"));
-		mav.addObject("key", map.get("key"));
-		mav.addObject("word", map.get("word"));
-		mav.setViewName("board/list");
-		return mav;
-	}
+    public ResponseEntity<?> list(@RequestParam Map<String, String> map) throws Exception {
+        log.debug("list parameter pgno : {}", map.get("pgno"));
+        
+        List<BoardDto> list = boardService.listArticle(map);
+        PageNavigation pageNavigation = boardService.makePageNavigation(map);
+        
+        Map<String, Object> response = new HashMap<>();
+        response.put("articles", list);
+        response.put("navigation", pageNavigation);
+        response.put("pgno", map.get("pgno"));
+        response.put("key", map.get("key"));
+        response.put("word", map.get("word"));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 	@GetMapping("/view")
-	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-			throws Exception {
-		log.debug("view articleNo : {}", articleNo);
-		BoardDto boardDto = boardService.getArticle(articleNo);
-		boardService.updateHit(articleNo);
-		model.addAttribute("article", boardDto);
-		model.addAttribute("pgno", map.get("pgno"));
-		model.addAttribute("key", map.get("key"));
-		model.addAttribute("word", map.get("word"));
-		return "board/view";
-	}
+    public ResponseEntity<Map<String, Object>> view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> params) throws Exception {
+        log.debug("view articleNo : {}", articleNo);
+        boardService.updateHit(articleNo);
+        BoardDto boardDto = boardService.getArticle(articleNo);
+        log.debug("view articleData : {}", boardDto);
+        Map<String, Object> response = new HashMap<>();
+        response.put("articles", boardDto);
+        response.put("pgno", params.get("pgno"));
+        response.put("key", params.get("key"));
+        response.put("word", params.get("word"));
+        
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
 
 	@GetMapping("/modify")
-	public String modify(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
-			throws Exception {
-		log.debug("modify articleNo : {}", articleNo);
-		BoardDto boardDto = boardService.getArticle(articleNo);
-		model.addAttribute("article", boardDto);
-		model.addAttribute("pgno", map.get("pgno"));
-		model.addAttribute("key", map.get("key"));
-		model.addAttribute("word", map.get("word"));
-		return "board/modify";
-	}
+    public ResponseEntity<Map<String, Object>> getModifyArticle(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> params) throws Exception {
+        log.debug("modify articleNo : {}", articleNo);
+        BoardDto boardDto = boardService.getArticle(articleNo);
 
-	@PostMapping("/modify")
-	public String modify(BoardDto boardDto, @RequestParam Map<String, String> map,
-			RedirectAttributes redirectAttributes) throws Exception {
-		log.debug("modify boardDto : {}", boardDto);
-		boardService.modifyArticle(boardDto);
-		redirectAttributes.addAttribute("pgno", map.get("pgno"));
-		redirectAttributes.addAttribute("key", map.get("key"));
-		redirectAttributes.addAttribute("word", map.get("word"));
-		return "redirect:/article/list";
-	}
+        Map<String, Object> response = new HashMap<>();
+        response.put("article", boardDto);
+        response.put("pgno", params.get("pgno"));
+        response.put("key", params.get("key"));
+        response.put("word", params.get("word"));
 
-	@GetMapping("/delete")
+        return new ResponseEntity<>(response, HttpStatus.OK);
+    }
+
+    @PutMapping("/modify")
+    public ResponseEntity<?> modifyArticle(@RequestBody BoardDto boardDto) throws Exception {
+        log.debug("modify boardDto : {}", boardDto);
+        boardService.modifyArticle(boardDto);
+
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
+	@DeleteMapping("/delete")
 	public String delete(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map,
 			RedirectAttributes redirectAttributes) throws Exception {
 		log.debug("delete articleNo : {}", articleNo);

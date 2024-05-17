@@ -1,0 +1,40 @@
+.container {
+  background: url('/path/to/your/background-image.jpg') no-repeat center center fixed; /* 배경 이미지 경로 설정 */
+  background-size: cover;
+  padding: 20px;
+}
+
+.title {
+  background: rgba(255, 255, 255, 0.8); 
+  /* 반투명 배경 */
+  padding: 10px;
+  border-radius: 10px;
+}
+
+.content-wrapper {
+  background: rgba(255, 255, 255, 0.8); /* 반투명 배경 */
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.article-title {
+  font-size: 1.5em;
+  font-weight: bold;
+}
+
+.article-content {
+  font-size: 1.2em;
+}
+
+button {
+  margin: 5px;
+}
+
+.avatar {
+  border-radius: 50%;
+}
+
+.divider {
+  border-top: 1px solid #ccc;
+  margin: 10px 0;
+}

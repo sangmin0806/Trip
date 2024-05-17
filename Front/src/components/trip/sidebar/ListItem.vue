@@ -9,16 +9,14 @@ const props = defineProps({
     },
 });
 const addToTriplist = () => {
-    const triplist = store.triplist.value;
-    triplist.push(props.item);
-    store.setTriplist(triplist);
+    store.addTrip(props.item);
     console.log(store.triplist)
 };
 </script>
 
 <template>
   <li>{{ item.title }} {{ item.typeName }}<img :src="item.imageUrl" alt="Image" /></li>
-  <button @click="addToTriplist">추가</button>
+  <button @click.prevent="addToTriplist()">추가</button>
 </template>
 
 <style scoped>

@@ -5,7 +5,7 @@ import { ref } from 'vue';
 import { search, getLocation } from '@/assets/api/trip/tripSearch.js';
 import SideBar from './sidebar/SideBar.vue';
 import SideList from './sidebar/SideList.vue';
-
+import MyTripList from './sidebar/MyTripList.vue';
 const sidebarStore = useSidebarStore();
 
 const lat = ref(37.566826);
@@ -147,8 +147,9 @@ async function itemClickHandle() {
 <template>
   <div class="container">
     <div>
-      <SideBar @itemClick="itemClickHandle" />
+      <side-bar @itemClick="itemClickHandle" />
       <side-list @search="searchHandle" :response="searchResponse.response" />
+      <my-trip-list />
     </div>
     <KakaoMap
       :lat="lat"

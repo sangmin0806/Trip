@@ -13,6 +13,8 @@ public class TripDto {
 	private String title;
 	private String tel;
 	private String description;
+	private String imageUrl;
+
 	private int sidoCode;
 	private int gugunCode;
 	private String sidoName;
@@ -22,13 +24,19 @@ public class TripDto {
 	private double longitude;
 	
 	
-	
 	public double getLongitude() {
 		return longitude;
 	}
 
 	public void setLongitude(double longitude) {
 		this.longitude = longitude;
+	}
+	public String getImageUrl() {
+		return imageUrl;
+	}
+
+	public void setImageUrl(String imageUrl) {
+		this.imageUrl = imageUrl;
 	}
 
 	@Override

@@ -1,23 +1,14 @@
 <script setup>
 import { ref, defineEmits } from 'vue';
-import { useSidelistStore,useSidebarStore } from '@/stores/sidebar.js';
+import { useSidebarStore } from '@/stores/sidebar.js';
+const store = useSidebarStore();
 
-const sidebarActive = ref(false);
-const searchInput = ref('');
-const emit = defineEmits(['search', 'itemClick']);
-const sidelistStore = useSidelistStore();
-const sidebarStore = useSidebarStore();
-
-const toggleSidebar = () => {
-    sidebarActive.value = !sidebarActive.value;
-    sidelistStore.setSidelistActive(sidebarActive.value);
-    sidebarStore.setSidebarActive(!sidebarActive.value)
-};
+const emit = defineEmits(['itemClick']);
 
 const items = [
     { name: '관광지', id: 12 },
     { name: '문화시설', id: 14 },
-    { name: '축제공연행사', id: 15 },
+    { name: '축제행사', id: 15 },
     { name: '여행코스', id: 25 },
     { name: '레포츠', id: 28 },
     { name: '숙박', id: 32 },
@@ -25,35 +16,19 @@ const items = [
     { name: '음식점', id: 39 },
     { name: 'e', id: 9 },
 ];
-const search = () => {
-    emit('search', searchInput.value);
-};
 const handleClick = (item) => {
-    emit('itemClick', { input: searchInput.value, contentTypeId: item.id });
+    store.setContentTypeId(item.id);
+    emit('itemClick');
 };
 </script>
 
 <template>
-  <nav class="sidebar" :class="{ active: sidebarActive }">
+  <nav class="sidebar">
     <div class="logo-menu">
-      <h2 class="logo">검색</h2>
-      <i class="bx bx-menu toggle-btn" @click="toggleSidebar"></i>
+      <i class="bx bx-menu toggle-btn"></i>
     </div>
 
     <ul class="list">
-      <li class="list-item" id="search">
-        <a href="#" :style="{ '--i': 1 }">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            v-model="searchInput"
-            @keyup.enter="search"
-            class="link-name"
-            required
-            placeholder="장소 검색"
-          />
-        </a>
-      </li>
       <li
         class="list-item"
         v-for="(item, index) in items"

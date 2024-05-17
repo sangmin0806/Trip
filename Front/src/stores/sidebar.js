@@ -26,6 +26,9 @@ const useSidebarStore = defineStore({
     setInput(input) {
       this.input = input;
     },
+    clearInput() {
+      this.input = '';
+    },
     addTrip(item) {
       this.triplist.push(item);
     },

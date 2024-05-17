@@ -6,6 +6,7 @@ import TripView from '@/views/TripView.vue';
 import TripRecommend from '@/components/trip/TripRecommend.vue';
 import TripList from '@/components/trip/TripList.vue';
 import UserFrom from '@/components/user/UserForm.vue';
+import { useSidebarStore } from '@/stores/sidebar.js';
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,20 +22,20 @@ const router = createRouter({
       component: UserFrom,
     },
     {
-      path: "/board",
-      name: "board",
+      path: '/board',
+      name: 'board',
       component: BoardView,
-      redirect: { name: "board-list" },
+      redirect: { name: 'board-list' },
       children: [
         {
-          path: "list",
-          name: "board-list",
-          component: () => import("@/components/board/BoardList.vue"),
+          path: 'list',
+          name: 'board-list',
+          component: () => import('@/components/board/BoardList.vue'),
         },
         {
-          path: "view/:articleno",
-          name: "article-view",
-          component: () => import("@/components/board/BoardDetail.vue"),
+          path: 'view/:articleno',
+          name: 'article-view',
+          component: () => import('@/components/board/BoardDetail.vue'),
         },
         // {
         //   path: "view/:articleno",
@@ -42,14 +43,14 @@ const router = createRouter({
         //   component: () => import("@/components/board/BoardDetail.vue"),
         // },
         {
-          path: "write",
-          name: "board-write",
-          component: () => import("@/components/board/BoardWrite.vue"),
+          path: 'write',
+          name: 'board-write',
+          component: () => import('@/components/board/BoardWrite.vue'),
         },
         {
-          path: "modify/:articleno",
-          name: "board-modify",
-          component: () => import("@/components/board/BoardModify.vue"),
+          path: 'modify/:articleno',
+          name: 'board-modify',
+          component: () => import('@/components/board/BoardModify.vue'),
         },
       ],
     },
@@ -68,6 +69,12 @@ const router = createRouter({
           path: 'list',
           name: 'trip-list',
           component: TripList,
+          beforeEnter: (to, from, next) => {
+            // '/trip/list' 경로로 이동할 때 triplist를 초기화합니다.
+            useSidebarStore().clearTrips();
+            useSidebarStore().clearInput();
+            next(); // 다음 단계로 진행합니다.
+          },
         },
       ],
     },

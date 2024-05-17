@@ -1,27 +1,15 @@
 import { ref } from 'vue';
 import { defineStore } from 'pinia';
 const sidebarActive = ref(false);
-const sidelistShow = ref(false);
-const useSidelistStore = defineStore({
-  id: 'sidelist',
-  state: () => ({
-    sidelistShow: sidelistShow.value,
-  }),
-  actions: {
-    toggleSidelist() {
-      sidelistShow.value = !sidelistShow.value;
-      this.sidelistShow = sidelistShow.value;
-    },
-    setSidelistActive(value) {
-      sidelistShow.value = value;
-      this.sidelistShow = value;
-    },
-  },
-});
+const input = ref('');
+const triplist = ref([]); // triplist 배열 추가
 const useSidebarStore = defineStore({
   id: 'sidebar',
   state: () => ({
     sidebarActive: sidebarActive.value,
+    contentTypeId: null,
+    input: input.value,
+    triplist: triplist.value,
   }),
   actions: {
     toggleSidebar() {
@@ -32,7 +20,22 @@ const useSidebarStore = defineStore({
       sidebarActive.value = value;
       this.sidebarActive = value;
     },
+    setContentTypeId(id) {
+      this.contentTypeId = id;
+    },
+    setInput(input) {
+      this.input = input;
+    },
+    addTrip(item) {
+      this.triplist.push(item);
+    },
+    removeTrip(index) {
+      this.triplist.splice(index, 1);
+    },
+    clearTrips() {
+      this.triplist = [];
+    },
   },
 });
 
-export { useSidebarStore, useSidelistStore };
+export { useSidebarStore };

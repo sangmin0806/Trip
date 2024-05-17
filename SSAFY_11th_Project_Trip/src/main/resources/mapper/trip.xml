@@ -12,6 +12,7 @@
 		<result column="thumbnail_image_id" property="thumbnailImageId"/>
 		<result column="title" property="title"/>
 		<result column="tel" property="tel"/>
+		<result column="url" property="imageUrl"/>
 		<result column="description" property="description"/>
 		<result column="sido_code" property="sidoCode"/>
 		<result column="gugun_code" property="gugunCode"/>
@@ -20,6 +21,7 @@
 		<result column="address" property="address"/>
 		<result column="latitude" property="latitude"/>
 		<result column="longitude" property="longitude"/>
+
 	</resultMap>
 	<!--
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
@@ -47,7 +49,7 @@
 		LIMIT 1
 	</select>
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
-		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address,
+		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude,i.url, ct.type_name, at.tel, at.description, ad.address,
 		ST_DISTANCE_SPHERE(
         	POINT(ad.longitude, ad.latitude),
         	POINT(#{longitude}, #{latitude})
@@ -55,6 +57,7 @@
 		from attraction at
 		join address ad on ad.content_id = at.content_id
 		join content_type ct on at.content_id = ct.content_id
+		join image i on at.thumbnail_image_id = i.id
 		<where>
 			<if test="input != ''">
 			    <foreach collection="keywords" item="keyword" open="(" separator=" and " close=")">
@@ -67,7 +70,7 @@
 		</where>
 		having distance &lt;1000
 		order by ct.content_id desc
-		limit 20
+		limit 10
 	</select>
 
 </mapper>

@@ -9,4 +9,5 @@ import com.ssafy.trip.model.TripDto;
 public interface TripService {
 	List<TripDto> listTripInfo(Map<String, Object> map) throws Exception;
 	Map<String, Object> locationInfo(Map<String, Object> map) throws Exception;
+	int putTripList(Map<String, Object> map) throws Exception;
 }

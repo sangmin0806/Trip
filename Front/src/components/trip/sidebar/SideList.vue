@@ -1,8 +1,7 @@
 <script setup>
-import { ref, defineProps,defineEmits } from 'vue';
-import {useSidebarStore } from '@/stores/sidebar.js';
+import { ref, defineProps, defineEmits } from 'vue';
+import { useSidebarStore } from '@/stores/sidebar.js';
 import ListItem from './ListItem.vue';
-
 const sidebarStore = useSidebarStore();
 const emit = defineEmits(['search']);
 const props = defineProps({
@@ -25,35 +24,35 @@ const search = () => {
 </script>
 
 <template>
-  <div class="sidebar" :class="{ active: sidebarActive  }">
-    <div class="logo-menu">
-      <h2 class="logo">{{ sidebarStore.input }}</h2>
+    <div class="sidebar" :class="{ active: sidebarActive }">
+        <div class="logo-menu">
+            <h2 class="logo">{{ sidebarStore.input }}</h2>
+        </div>
+        <i
+            :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
+            @click="toggleSidebar"
+        ></i>
+        <ul class="list">
+            <li class="list-item" id="search">
+                <a href="#" :style="{ '--i': 1 }">
+                    <i class="bx bx-search"></i>
+                    <input
+                        type="text"
+                        v-model="sidebarStore.input"
+                        @keyup.enter="search"
+                        class="link-name"
+                        required
+                        placeholder="장소 검색"
+                    />
+                </a>
+            </li>
+        </ul>
+        <div class="scroll">
+            <ul class="list">
+                <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
+            </ul>
+        </div>
     </div>
-    <i
-      :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
-      @click="toggleSidebar"
-    ></i>
-    <ul class="list">
-      <li class="list-item" id="search">
-        <a href="#" :style="{ '--i': 1 }">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            v-model="sidebarStore.input"
-            @keyup.enter="search"
-            class="link-name"
-            required
-            placeholder="장소 검색"
-          />
-        </a>
-      </li>
-    </ul>
-    <div class="scroll">
-      <ul class="list">
-        <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
-      </ul>
-    </div>
-  </div>
 </template>
 
 <style scoped>

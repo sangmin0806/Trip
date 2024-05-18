@@ -9,76 +9,75 @@ import UserFrom from '@/components/user/UserForm.vue';
 import { useSidebarStore } from '@/stores/sidebar.js';
 
 const router = createRouter({
-  history: createWebHistory(import.meta.env.BASE_URL),
-  routes: [
-    {
-      path: '/',
-      name: 'home',
-      component: HomeView,
-    },
-    {
-      path: '/mypage',
-      name: 'my-page',
-      component: UserFrom,
-    },
-    {
-      path: '/board',
-      name: 'board',
-      component: BoardView,
-      redirect: { name: 'board-list' },
-      children: [
+    history: createWebHistory(import.meta.env.BASE_URL),
+    routes: [
         {
-          path: 'list',
-          name: 'board-list',
-          component: () => import('@/components/board/BoardList.vue'),
+            path: '/',
+            name: 'home',
+            component: HomeView,
         },
         {
-          path: 'view/:articleno',
-          name: 'article-view',
-          component: () => import('@/components/board/BoardDetail.vue'),
-        },
-        // {
-        //   path: "view/:articleno",
-        //   name: "board-view",
-        //   component: () => import("@/components/board/BoardDetail.vue"),
-        // },
-        {
-          path: 'write',
-          name: 'board-write',
-          component: () => import('@/components/board/BoardWrite.vue'),
+            path: '/mypage',
+            name: 'my-page',
+            component: UserFrom,
         },
         {
-          path: 'modify/:articleno',
-          name: 'board-modify',
-          component: () => import('@/components/board/BoardModify.vue'),
+            path: '/board',
+            name: 'board',
+            component: BoardView,
+            redirect: { name: 'board-list' },
+            children: [
+                {
+                    path: 'list',
+                    name: 'board-list',
+                    component: () => import('@/components/board/BoardList.vue'),
+                },
+                {
+                    path: 'view/:articleno',
+                    name: 'article-view',
+                    component: () => import('@/components/board/BoardDetail.vue'),
+                },
+                // {
+                //   path: "view/:articleno",
+                //   name: "board-view",
+                //   component: () => import("@/components/board/BoardDetail.vue"),
+                // },
+                {
+                    path: 'write',
+                    name: 'board-write',
+                    component: () => import('@/components/board/BoardWrite.vue'),
+                },
+                {
+                    path: 'modify/:articleno',
+                    name: 'board-modify',
+                    component: () => import('@/components/board/BoardModify.vue'),
+                },
+            ],
         },
-      ],
-    },
-    {
-      path: '/trip',
-      name: 'trip',
-      component: TripView,
-      redirect: { name: 'trip-list' },
-      children: [
         {
-          path: 'recommend',
-          name: 'trip-recommend',
-          component: TripRecommend,
+            path: '/trip',
+            name: 'trip',
+            component: TripView,
+            redirect: { name: 'trip-list' },
+            children: [
+                {
+                    path: 'recommend',
+                    name: 'trip-recommend',
+                    component: TripRecommend,
+                },
+                {
+                    path: 'list',
+                    name: 'trip-list',
+                    component: TripList,
+                    beforeEnter: (to, from, next) => {
+                        useSidebarStore().clearTrips();
+                        useSidebarStore().clearInput();
+                        next();
+                    },
+                },
+            ],
         },
-        {
-          path: 'list',
-          name: 'trip-list',
-          component: TripList,
-          beforeEnter: (to, from, next) => {
-            // '/trip/list' 경로로 이동할 때 triplist를 초기화합니다.
-            useSidebarStore().clearTrips();
-            useSidebarStore().clearInput();
-            next(); // 다음 단계로 진행합니다.
-          },
-        },
-      ],
-    },
-  ],
+    ],
 });
 
 export default router;

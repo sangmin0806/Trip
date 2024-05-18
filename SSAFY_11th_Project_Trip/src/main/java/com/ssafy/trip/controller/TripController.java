@@ -41,8 +41,8 @@ public class TripController {
 		super();
 		this.tripService = tripService;
 	}
-	@PostMapping("/location")
-	public ResponseEntity<?> location(@RequestBody Map<String, Object> map) throws Exception {
+	@GetMapping("/location")
+	public ResponseEntity<?> location(@RequestParam Map<String, Object> map) throws Exception {
 		String input = (String) map.get("input");
 		if (input != null  && !input.isEmpty()) {
 	        String[] keywords = input.split("\\s+");
@@ -53,8 +53,8 @@ public class TripController {
 	    log.debug("list : {}", info);
 	    return new ResponseEntity<>(info, HttpStatus.OK);
 	}
-	@PostMapping("/list")
-	public ResponseEntity<?> list(@RequestBody Map<String, Object> map) throws Exception {
+	@GetMapping("/list")
+	public ResponseEntity<?> list(@RequestParam Map<String, Object> map) throws Exception {
 		String input = (String) map.get("input");
 		if (input != null  && !input.isEmpty()) {
 	        String[] keywords = input.split("\\s+");
@@ -66,6 +66,19 @@ public class TripController {
 	    return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
+	@PostMapping("/tripList")
+	public ResponseEntity<?> putTripList(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
+		
+		map.put("userId", session.getAttribute("userId"));
+		System.out.println(map);
+		int success = tripService.putTripList(map);
+		if(success!=0) {
+			return ResponseEntity.ok().build();
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+		
+	}
 //	@GetMapping("/view")
 //	public String view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> map, Model model)
 //			throws Exception {

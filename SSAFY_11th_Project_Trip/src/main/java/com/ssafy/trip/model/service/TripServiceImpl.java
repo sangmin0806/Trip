@@ -1,5 +1,6 @@
 package com.ssafy.trip.model.service;
 
+import java.math.BigInteger;
 import java.util.List;
 import java.util.Map;
 
@@ -28,6 +29,15 @@ public class TripServiceImpl implements TripService {
 	public Map<String, Object> locationInfo(Map<String, Object> map) throws Exception {
 		// TODO Auto-generated method stub
 		return tripMapper.locationInfo(map);
+	}
+	@Override
+	public int putTripList(Map<String, Object> map) throws Exception {
+		tripMapper.insertList(map);
+		BigInteger bigIntegerListId = (BigInteger) map.get("listId");
+        int listId = bigIntegerListId.intValue();
+		map.put("listId", listId);
+		System.out.println(map);
+		return tripMapper.insertAttractionList(map);
 	}
 
 }

@@ -74,7 +74,7 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 CREATE TABLE `List` (
-	`id`	int	NOT NULL	COMMENT 'Auto Increment',
+	`id` INT NOT NULL AUTO_INCREMENT 
 	`user_id`	int	NOT NULL,
 	`title`	varchar(30)	NULL,
 	`description`	varchar(100)	NULL

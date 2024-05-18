@@ -1,41 +1,58 @@
 <script setup>
 import { ref } from 'vue';
-import {useSidebarStore } from '@/stores/sidebar.js';
+import { useSidebarStore } from '@/stores/sidebar.js';
+import { useAuthStore } from '@/stores/auth.js';
+import { putTripList } from '@/assets/api/trip/tripList.js';
 import MyTripListItem from './MyTripListItem.vue';
-const store = useSidebarStore();
-const sidebarActive = ref(true);
+const sidebarStore = useSidebarStore();
+const authStore = useAuthStore();
+const title = ref('');
+const detail = ref('');
+const toggleSidebar = () => {
+    if (!authStore.isLoggedIn) {
+        alert('로그인 후에 이용해주세요!');
+        return;
+    }
+    sidebarStore.tripListActive = !sidebarStore.tripListActive;
+};
+
+async function putTripListHandle() {
+    const param = {
+        title: title.value,
+        detail: detail.value,
+        contentIdList: sidebarStore.tripList.map((item) => item.contentId),
+    };
+    putTripList(
+        param,
+        (response) => {
+            console.log(response);
+            sidebarStore.clearTrips();
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+}
 </script>
 
 <template>
-  <div class="triplist" :class="{ active: sidebarActive  }">
-    <div class="logo-menu">
-      <h2 class="logo">으아아아악</h2>
+    <div class="triplist" :class="{ active: sidebarStore.tripListActive }">
+        <div class="logo-menu">
+            <h2 class="logo">Planner</h2>
+        </div>
+        <i
+            :class="['toggle-btn', sidebarStore.tripListActive ? 'bx bx-chevron-right' : 'bx bx-chevron-left']"
+            @click="toggleSidebar"
+        ></i>
+        <div class="scroll">
+            <ul class="list">
+                <my-trip-list-item v-for="(item, index) in sidebarStore.tripList" :key="index" :item="item" />
+            </ul>
+            <input type="text" v-model="title" class="link-name" required placeholder="리스트 이름" />
+            <input type="textarea" v-model="detail" class="link-name" required placeholder="설명" />
+            <button @click.prevent="putTripListHandle">저장</button>
+        </div>
     </div>
-    <i
-      :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
-      @click="toggleSidebar"
-    ></i>
-    <ul class="list">
-      <li class="list-item" id="search">
-        <a href="#" :style="{ '--i': 1 }">
-          <i class="bx bx-search"></i>
-          <input
-            type="text"
-            v-model="store.input"
-            @keyup.enter="search"
-            class="link-name"
-            required
-            placeholder="장소 검색"
-          />
-        </a>
-      </li>
-    </ul>
-    <div class="scroll">
-      <ul class="list">
-        <my-trip-list-item v-for="(item, index) in store.triplist" :key="index" :item="item" />
-      </ul>
-    </div>
-  </div>
 </template>
 
 <style scoped>

@@ -43,7 +43,6 @@ function handleLogin() {
         (data) => {
             reset();
             emit('loginSuccess');
-            router.push('/');
         },
         (error) => {
             alert('로그인에 실패했습니다. 다시 시도해주세요.');

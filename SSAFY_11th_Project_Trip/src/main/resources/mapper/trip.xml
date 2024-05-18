@@ -48,6 +48,24 @@
 		</where>
 		LIMIT 1
 	</select>
+	
+	<insert id="insertList" parameterType="map" useGeneratedKeys="true" keyProperty="listId">
+		insert into list (user_id, title, description)
+    	(select id, #{title}, #{detail}
+	    from members
+	    where user_id = #{userId})
+	</insert>
+	
+
+    <insert id="insertAttractionList" parameterType="map">
+        insert into attraction_list (list_id, content_id)
+        values
+        <foreach item="contentId" collection="contentIdList" separator=",">
+            (#{listId}, #{contentId})
+        </foreach>
+    </insert>
+
+	
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
 		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude,i.url, ct.type_name, at.tel, at.description, ad.address,
 		ST_DISTANCE_SPHERE(

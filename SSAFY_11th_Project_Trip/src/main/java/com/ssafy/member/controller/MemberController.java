@@ -82,6 +82,7 @@ public class MemberController {
 			MemberDto memberDto = memberService.loginMember(map);
 			if (memberDto != null) {
 	            // 로그인 성공 시
+				session.setAttribute("userId", memberDto.getUserId());
 	            session.setAttribute("isLoggedIn", true); // 세션에 로그인 상태 저장
 	            return ResponseEntity.ok().build(); // 성공 응답 (HTTP 상태 코드 200)
 	        } else {

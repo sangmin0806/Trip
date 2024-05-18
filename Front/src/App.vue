@@ -3,18 +3,18 @@ import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
 import Modal from '@/components/user/Modal.vue';
 import { logoutSubmit } from '@/assets/api/user/user';
-
+import { useAuthStore } from '@/stores/auth.js';
 const isModalActive = ref(false);
 const loginFormVisible = ref(true);
 const registerFormVisible = ref(false);
-const isLoggedIn = ref(false);
+const authStore = useAuthStore();
 
 function logout() {
     logoutSubmit(
         (data) => {
             isModalActive.value = false;
             loginFormVisible.value = false;
-            isLoggedIn.value = false;
+            authStore.isLoggedIn = false;
         },
         (error) => {
             // Handle error
@@ -35,7 +35,7 @@ function showLoginForm() {
 function handleLoginSuccess() {
     isModalActive.value = false;
     loginFormVisible.value = false;
-    isLoggedIn.value = true;
+    authStore.isLoggedIn = true;
 }
 
 function handleRegisterSuccess() {
@@ -51,10 +51,12 @@ function handleRegisterSuccess() {
             <nav class="navigation">
                 <RouterLink :to="{ name: 'board-list' }" class="link">공지사항</RouterLink>
                 <RouterLink :to="{ name: 'trip' }" class="link">여행지 조회</RouterLink>
-                <RouterLink :to="{ name: 'trip-recommend' }" class="link" v-if="isLoggedIn">추천 코스</RouterLink>
-                <RouterLink :to="{ name: 'my-page' }" class="link" v-if="isLoggedIn">마이페이지</RouterLink>
-                <button @click="showLoginForm" class="btnLogin-popup" v-if="!isLoggedIn">Login</button>
-                <button @click="logout" v-if="isLoggedIn" class="btnLogout-popup">Logout</button>
+                <RouterLink :to="{ name: 'trip-recommend' }" class="link" v-if="authStore.isLoggedIn"
+                    >추천 코스</RouterLink
+                >
+                <RouterLink :to="{ name: 'my-page' }" class="link" v-if="authStore.isLoggedIn">마이페이지</RouterLink>
+                <button @click="showLoginForm" class="btnLogin-popup" v-if="!authStore.isLoggedIn">Login</button>
+                <button @click="logout" v-if="authStore.isLoggedIn" class="btnLogout-popup">Logout</button>
             </nav>
         </header>
         <Modal

@@ -72,6 +72,7 @@ const router = createRouter({
                     beforeEnter: (to, from, next) => {
                         useSidebarStore().clearTrips();
                         useSidebarStore().clearInput();
+                        useSidebarStore().tripListActive = false;
                         next();
                     },
                 },

@@ -1,31 +1,38 @@
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, watch } from 'vue';
 import { useSidebarStore } from '@/stores/sidebar.js';
 import { useAuthStore } from '@/stores/auth.js';
-import { putTripList } from '@/assets/api/trip/tripList.js';
-import MyTripListItem from './MyTripListItem.vue';
+import { registerPlan, getPlanLists } from '@/assets/api/trip/tripList.js';
+import MyTripListItem from './picktrip/MyTripListItem.vue';
+import MyPlanList from './plan/MyPlanList.vue';
 const sidebarStore = useSidebarStore();
 const authStore = useAuthStore();
 const title = ref('');
-const detail = ref('');
+const description = ref('');
+const myPlan = ref({ data: [] });
 const toggleSidebar = () => {
     if (!authStore.isLoggedIn) {
         alert('로그인 후에 이용해주세요!');
         return;
     }
     sidebarStore.tripListActive = !sidebarStore.tripListActive;
+    if (sidebarStore.tripListActive) {
+        PlanListsHandle();
+    }
 };
 
-async function putTripListHandle() {
+async function registerPlanHandle() {
     const param = {
         title: title.value,
-        detail: detail.value,
+        description: description.value,
         contentIdList: sidebarStore.tripList.map((item) => item.contentId),
     };
-    putTripList(
+    registerPlan(
         param,
         (response) => {
-            console.log(response);
+            PlanListsHandle();
+            title.value = '';
+            description.value = '';
             sidebarStore.clearTrips();
         },
         (error) => {
@@ -33,6 +40,30 @@ async function putTripListHandle() {
         }
     );
 }
+async function PlanListsHandle() {
+    getPlanLists(
+        (response) => {
+            console.log(response.data);
+            myPlan.value = response.data;
+        },
+        (error) => {
+            console.log(error);
+        }
+    );
+}
+onMounted(() => {
+    PlanListsHandle();
+});
+watch(
+    () => authStore.isLoggedIn,
+    (newValue, oldValue) => {
+        if (newValue) {
+            PlanListsHandle();
+        } else {
+            sidebarStore.tripListActive = false;
+        }
+    }
+);
 </script>
 
 <template>
@@ -45,12 +76,21 @@ async function putTripListHandle() {
             @click="toggleSidebar"
         ></i>
         <div class="scroll">
+            <ul class="plan-list">
+                <my-plan-list
+                    v-for="(item, index) in myPlan"
+                    :key="index"
+                    :item="item"
+                    @getPlanLists="PlanListsHandle"
+                />
+            </ul>
+            <h3>여행지 추가</h3>
             <ul class="list">
                 <my-trip-list-item v-for="(item, index) in sidebarStore.tripList" :key="index" :item="item" />
             </ul>
             <input type="text" v-model="title" class="link-name" required placeholder="리스트 이름" />
-            <input type="textarea" v-model="detail" class="link-name" required placeholder="설명" />
-            <button @click.prevent="putTripListHandle">저장</button>
+            <input type="textarea" v-model="description" class="link-name" required placeholder="설명" />
+            <button @click.prevent="registerPlanHandle">저장</button>
         </div>
     </div>
 </template>

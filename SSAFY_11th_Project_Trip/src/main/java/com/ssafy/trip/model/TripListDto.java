@@ -2,7 +2,7 @@ package com.ssafy.trip.model;
 
 public class TripListDto {
 	private int id;
-	private int user_id;
+	private int userId;
 	private String title;
 	private String description;
 	public int getId() {
@@ -11,11 +11,12 @@ public class TripListDto {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public int getUser_id() {
-		return user_id;
+
+	public int getUserId() {
+		return userId;
 	}
-	public void setUser_id(int user_id) {
-		this.user_id = user_id;
+	public void setUserId(int userId) {
+		this.userId = userId;
 	}
 	public String getTitle() {
 		return title;
@@ -31,7 +32,7 @@ public class TripListDto {
 	}
 	@Override
 	public String toString() {
-		return "TripListDto [id=" + id + ", user_id=" + user_id + ", title=" + title + ", description=" + description
+		return "TripListDto [id=" + id + ", user_id="  + ", title=" + title + ", description=" + description
 				+ "]";
 	}
 	

@@ -11,10 +11,13 @@ const props = defineProps({
 </script>
 
 <template>
-    <li>
-        {{ item.title }}
-    </li>
+    <li>{{ item.title }}<img :src="item.imageUrl" alt="Image" /></li>
     <button @click.prevent="sidebarStore.removeTrip(item.contentId)">삭제</button>
 </template>
 
-<style scoped></style>
+<style scoped>
+img {
+    width: 150px;
+    height: 150px;
+}
+</style>

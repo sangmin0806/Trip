@@ -1,6 +1,6 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
-import { useRouter } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import { loginFormSubmit, registerFormSubmit } from '@/assets/api/user/user.js';
 
 const props = defineProps({
@@ -17,6 +17,7 @@ const emit = defineEmits([
     'registerSuccess',
 ]);
 const router = useRouter();
+
 const user = ref({
     userId: '',
     userPwd: '',
@@ -36,13 +37,14 @@ function reset() {
         agree: '',
     };
 }
-
+const route = useRoute();
 function handleLogin() {
     loginFormSubmit(
         user.value,
         (data) => {
             reset();
             emit('loginSuccess');
+            router.push(route.path);
         },
         (error) => {
             alert('로그인에 실패했습니다. 다시 시도해주세요.');

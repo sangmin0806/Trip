@@ -6,19 +6,17 @@
 
 .triplist {
     position: fixed;
-    margin: 0;
     width: 0;
-    height: 100%;
+    height: 90%;
     right: 0;
     z-index: 99;
     background-color: transparent;
     backdrop-filter: blur(20px);
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
-    padding: 0;
     transition: 0.5s;
 }
 .triplist .scroll {
-    height: 100%;
+    height: 90%;
     overflow-y: auto;
 }
 
@@ -132,4 +130,7 @@
 }
 .scroll button {
     padding: 2px 5px;
+}
+h3 {
+    margin: 20px 0px;
 }

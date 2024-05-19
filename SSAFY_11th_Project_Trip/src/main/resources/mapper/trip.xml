@@ -4,6 +4,13 @@
 
 <mapper namespace="com.ssafy.trip.model.mapper.TripMapper">
 
+	<resultMap type="tripListDto" id="planInfo">
+		<result column="id" property="id"/>
+		<result column="user_id" property="userId"/>
+		<result column="title" property="title"/>
+		<result column="description" property="description"/>
+	</resultMap>
+	
 	<resultMap type="tripDto" id="tripInfo">
 		<result column="id" property="id"/>
 		<result column="content_id" property="contentId"/>
@@ -23,19 +30,7 @@
 		<result column="longitude" property="longitude"/>
 
 	</resultMap>
-	<!--
-	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
-		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude, ct.type_name, at.tel, at.description, ad.address
-		from attraction at
-		join address ad on ad.content_id = at.content_id
-		join content_type ct on at.content_id = ct.content_id
-		join sido s on ad.sido_code = s.sido_code
-		join gugun g on ad.gugun_code = g.gugun_code
-		where s.sido_name = #{sidoName} and g.gugun_name = #{gugunName} and ct.content_type_id = #{contentTypeId}
-		order by ct.content_id desc
-		limit 20
-	</select>
-	  -->
+
 	  <select id="locationInfo" parameterType="map">
 		select latitude, longitude
 		from locations
@@ -51,7 +46,7 @@
 	
 	<insert id="insertList" parameterType="map" useGeneratedKeys="true" keyProperty="listId">
 		insert into list (user_id, title, description)
-    	(select id, #{title}, #{detail}
+    	(select id, #{title}, #{description}
 	    from members
 	    where user_id = #{userId})
 	</insert>
@@ -90,5 +85,33 @@
 		order by ct.content_id desc
 		limit 10
 	</select>
+	
 
+	<select id="getPlanLists" parameterType="map" resultMap="planInfo">
+		select l.id,l.user_id,l.title, l.description
+	    from list l
+	    join members m on l.user_id = m.id
+	    where m.user_id = #{userId}
+	</select>
+	
+	<delete id="deleteList" parameterType="int">
+		delete from list
+	    where id = #{id}
+	</delete>
+	<delete id="deleteAttractionList" parameterType="int">
+		delete from attraction_list
+	    where list_id = #{id}
+	</delete>
+	
+	<select id="listTripInfoById" parameterType="int" resultMap="tripInfo">
+		select at.title, i.url, at.description
+	    from attraction at
+	    join image i on at.thumbnail_image_id = i.id
+	    where at.content_id in (
+	        select al.content_id
+	        from attraction_list al
+	        where al.list_id = #{id}
+	    )
+	</select>
+	
 </mapper>

@@ -13,6 +13,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,6 +24,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.ssafy.trip.model.TripDto;
+import com.ssafy.trip.model.TripListDto;
 import com.ssafy.trip.model.service.TripService;
 
 import com.ssafy.util.PageNavigation;
@@ -66,12 +68,33 @@ public class TripController {
 	    return new ResponseEntity<>(list, HttpStatus.OK);
 	}
 
-	@PostMapping("/tripList")
-	public ResponseEntity<?> putTripList(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
-		
+	@GetMapping("/planLists")
+	public ResponseEntity<?> getPlanLists(@RequestParam Map<String, Object> map,HttpSession session) throws Exception {
+		map.put("userId", session.getAttribute("userId"));
+		log.debug("map : {}", map);
+	    List<TripListDto> list = tripService.getPlanLists(map);
+	    log.debug("list : {}", list);
+	    return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	@GetMapping("/planLists/{id}")
+	public ResponseEntity<?> getPlan(@PathVariable int id) throws Exception {
+		List<TripDto> list = tripService.listTripInfoById(id);
+	    return new ResponseEntity<>(list, HttpStatus.OK);
+	}
+	@PostMapping("/planLists/{id}")
+	public ResponseEntity<?> deletePlan(@PathVariable int id) throws Exception {
+		int success = tripService.deletePlan(id);
+		if(success!=0) {
+			return ResponseEntity.ok().build();
+		}else {
+			return ResponseEntity.status(HttpStatus.BAD_REQUEST).build();
+		}
+	}
+	@PostMapping("/planLists")
+	public ResponseEntity<?> registerPlan(@RequestBody Map<String, Object> map, HttpSession session) throws Exception {
 		map.put("userId", session.getAttribute("userId"));
 		System.out.println(map);
-		int success = tripService.putTripList(map);
+		int success = tripService.registerPlan(map);
 		if(success!=0) {
 			return ResponseEntity.ok().build();
 		}else {

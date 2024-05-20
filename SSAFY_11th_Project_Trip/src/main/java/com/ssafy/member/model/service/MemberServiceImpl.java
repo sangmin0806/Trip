@@ -65,4 +65,8 @@ public class MemberServiceImpl implements MemberService {
 		memberMapper.deleteMember(userId);		
 	}
 
+	@Override
+	public boolean updateUser(MemberDto memberDto) throws Exception {
+		return memberMapper.updateUser(memberDto) > 0;
+	}
 }

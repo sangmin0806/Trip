@@ -85,7 +85,7 @@ function onDeleteArticle() {
                 src="https://raw.githubusercontent.com/twbs/icons/main/icons/person-fill.svg"
               />
               <p>
-                <span class="fw-bold">{{ article.articles.userId }}</span> <br />
+                <span class="fw-bold">{{ article.articles.userName }}</span> <br />
                 <span class="text-secondary fw-light">
                   {{ article.articles.registerTime }} 조회수 : {{ article.articles.hit }}
                 </span>

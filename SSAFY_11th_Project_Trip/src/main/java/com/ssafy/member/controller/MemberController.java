@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -120,5 +121,27 @@ public class MemberController {
             return new ResponseEntity<>("Error fetching user data", HttpStatus.INTERNAL_SERVER_ERROR);
         }
     }
+	
+	@PutMapping("/update/{userId}")
+	@ResponseBody
+	public ResponseEntity<?> updateUser(@PathVariable("userId") String userId, @RequestBody MemberDto memberDto) {
+		log.debug("updateUser userId: {}, memberDto: {}", userId, memberDto);
+		try {
+			// Ensure the userId from the path matches the userId in the DTO
+			if (!userId.equals(memberDto.getUserId())) {
+				return ResponseEntity.status(HttpStatus.BAD_REQUEST).body("User ID mismatch");
+			}
+
+			boolean updated = memberService.updateUser(memberDto);
+			if (updated) {
+				return ResponseEntity.ok().build(); // 성공 응답 (HTTP 상태 코드 200)
+			} else {
+				return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User not found"); // 실패 응답 (HTTP 상태 코드 404)
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("Update failed"); // 서버 오류 응답 (HTTP 상태 코드 500)
+		}
+	}
 	
 }

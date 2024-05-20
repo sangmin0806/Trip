@@ -15,11 +15,13 @@ public interface MemberMapper {
 	void joinMember(MemberDto memberDto) throws SQLException;
 	MemberDto loginMember(Map<String, String> map) throws SQLException;
 	MemberDto getUserById(String userId);
+	int updateUser(MemberDto memberDto);
 	
 	/* Admin */
 	List<MemberDto> listMember(Map<String, Object> map) throws SQLException;
 	MemberDto getMember(String userId) throws SQLException;
 	void updateMember(MemberDto memberDto) throws SQLException;
 	void deleteMember(String userId) throws SQLException;
+	
 	
 }

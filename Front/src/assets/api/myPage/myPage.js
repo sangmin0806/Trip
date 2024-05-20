@@ -15,12 +15,13 @@ async function fetchUserDetail(userId) {
 // 유저 정보 수정하기
 async function updateUserDetail(user) {
   try {
-    const response = await local.put(`/user/${user.userId}`, user);
+    const response = await local.put(`/user/update/${user.userId}`, user);
     return response.data;
   } catch (error) {
     console.error(error);
     throw error;
   }
 }
+
 
 export { fetchUserDetail, updateUserDetail };

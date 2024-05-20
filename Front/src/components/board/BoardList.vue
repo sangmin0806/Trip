@@ -1,7 +1,7 @@
 <script setup>
 import { ref, onMounted } from "vue";
 import { useRouter } from "vue-router";
-import { listArticle } from "@/assets/api/board/board.js";
+import { listArticle } from "@/api/board/board.js";
 
 import VSelect from "./common/VSelect.vue";
 import BoardListItem from "./item/BoardListItem.vue";

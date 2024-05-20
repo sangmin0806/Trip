@@ -70,49 +70,6 @@ public class BoardController {
 		return "board/write";
 	}
 
-//	@PostMapping("/write")
-//	public String write(BoardDto boardDto, @RequestParam("upfile") MultipartFile[] files, HttpSession session,
-//			RedirectAttributes redirectAttributes) throws Exception {
-//		log.debug("write boardDto : {}", boardDto);
-//		MemberDto memberDto = (MemberDto) session.getAttribute("userinfo");
-//		boardDto.setUserId(memberDto.getUserId());
-//
-////		FileUpload 관련 설정.
-//		log.debug("uploadPath : {}, uploadImagePath : {}, uploadFilePath : {}", uploadPath, uploadImagePath, uploadFilePath);
-//		log.debug("MultipartFile.isEmpty : {}", files[0].isEmpty());
-//		if (!files[0].isEmpty()) {
-////			String realPath = servletContext.getRealPath(UPLOAD_PATH);
-////			String realPath = servletContext.getRealPath("/resources/img");
-//			String today = new SimpleDateFormat("yyMMdd").format(new Date());
-//			String saveFolder = uploadPath + File.separator + today;
-//			log.debug("저장 폴더 : {}", saveFolder);
-//			File folder = new File(saveFolder);
-//			if (!folder.exists())
-//				folder.mkdirs();
-//			List<FileInfoDto> fileInfos = new ArrayList<FileInfoDto>();
-//			for (MultipartFile mfile : files) {
-//				FileInfoDto fileInfoDto = new FileInfoDto();
-//				String originalFileName = mfile.getOriginalFilename();
-//				if (!originalFileName.isEmpty()) {
-//					String saveFileName = UUID.randomUUID().toString()
-//							+ originalFileName.substring(originalFileName.lastIndexOf('.'));
-//					fileInfoDto.setSaveFolder(today);
-//					fileInfoDto.setOriginalFile(originalFileName);
-//					fileInfoDto.setSaveFile(saveFileName);
-//					log.debug("원본 파일 이름 : {}, 실제 저장 파일 이름 : {}", mfile.getOriginalFilename(), saveFileName);
-//					mfile.transferTo(new File(folder, saveFileName));
-//				}
-//				fileInfos.add(fileInfoDto);
-//			}
-//			boardDto.setFileInfos(fileInfos);
-//		}
-//
-//		boardService.writeArticle(boardDto);
-//		redirectAttributes.addAttribute("pgno", "1");
-//		redirectAttributes.addAttribute("key", "");
-//		redirectAttributes.addAttribute("word", "");
-//		return "redirect:/article/list";
-//	}
 	@PostMapping("/write")
     public String write(@RequestBody BoardDto boardDto, HttpSession session) throws Exception {
         log.debug("Received boardDto : {}", boardDto);

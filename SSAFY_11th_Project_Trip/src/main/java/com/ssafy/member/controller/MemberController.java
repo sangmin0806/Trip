@@ -106,4 +106,19 @@ public class MemberController {
 		return "redirect:/assets/list.html";
 	}
 	
+	@GetMapping("/detail/{userId}")
+    public ResponseEntity<?> getUserById(@PathVariable("userId") String userId) {
+        try {
+            MemberDto memberDto = memberService.getUserById(userId);
+            if (memberDto != null) {
+                return new ResponseEntity<>(memberDto, HttpStatus.OK);
+            } else {
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+            return new ResponseEntity<>("Error fetching user data", HttpStatus.INTERNAL_SERVER_ERROR);
+        }
+    }
+	
 }

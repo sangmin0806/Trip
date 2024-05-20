@@ -1,6 +1,7 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+import { useAuthStore } from '@/stores/auth';
 import { loginFormSubmit, registerFormSubmit } from '@/assets/api/user/user.js';
 
 const props = defineProps({
@@ -17,6 +18,7 @@ const emit = defineEmits([
     'registerSuccess',
 ]);
 const router = useRouter();
+const authStore = useAuthStore();
 
 const user = ref({
     userId: '',
@@ -42,6 +44,7 @@ function handleLogin() {
     loginFormSubmit(
         user.value,
         (data) => {
+            authStore.setUserId(user.value.userId); // 로그인 성공 시 userId 저장
             reset();
             emit('loginSuccess');
             router.push(route.path);
@@ -91,7 +94,7 @@ function showRegisterForm() {
         class="wrapper"
         :class="{ 'active-popup': isActive }"
         :style="{ height: registerFormVisible ? '600px' : '440px' }"
-        style="z-index: 9999"
+        style="z-index: 9999" 
     >
         <div class="modal-content" :class="{ active: registerFormVisible }">
             <span class="icon-close" @click="closeModal"><ion-icon name="close"></ion-icon></span>

@@ -2,7 +2,7 @@
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { useSidebarStore } from '@/stores/sidebar.js';
 import { ref } from 'vue';
-import { search, getLocation } from '@/assets/api/trip/tripSearch.js';
+import { search, getLocation } from '@/api/trip/tripSearch.js';
 import SideBar from './sidebar/leftsidebar/SideBar.vue';
 import SideList from './sidebar/leftsidebar/SideList.vue';
 import MyTripList from './sidebar/rightsidebar/MyTripList.vue';
@@ -138,24 +138,30 @@ async function itemClickHandle() {
 </script>
 
 <template>
-    <div class="container">
-        <div>
-            <side-bar @itemClick="itemClickHandle" />
-            <side-list @search="searchHandle" :response="searchResponse.response" />
-            <my-trip-list />
-        </div>
-        <KakaoMap :lat="lat" :lng="lng" @onLoadKakaoMap="onLoadKakaoMap" :draggable="true" class="kakao-map">
-            <KakaoMapMarker
-                v-for="(marker, index) in markerList"
-                :key="marker.key === undefined ? index : marker.key"
-                :lat="marker.lat"
-                :lng="marker.lng"
-                :infoWindow="marker.infoWindow"
-                :clickable="true"
-                @onClickKakaoMapMarker="onClickMapMarker(marker)"
-            ></KakaoMapMarker>
-        </KakaoMap>
+  <div class="container">
+    <div>
+      <side-bar @itemClick="itemClickHandle" />
+      <side-list @search="searchHandle" :response="searchResponse.response" />
+      <my-trip-list />
     </div>
+    <KakaoMap
+      :lat="lat"
+      :lng="lng"
+      @onLoadKakaoMap="onLoadKakaoMap"
+      :draggable="true"
+      class="kakao-map"
+    >
+      <KakaoMapMarker
+        v-for="(marker, index) in markerList"
+        :key="marker.key === undefined ? index : marker.key"
+        :lat="marker.lat"
+        :lng="marker.lng"
+        :infoWindow="marker.infoWindow"
+        :clickable="true"
+        @onClickKakaoMapMarker="onClickMapMarker(marker)"
+      ></KakaoMapMarker>
+    </KakaoMap>
+  </div>
 </template>
 
 <style scoped>

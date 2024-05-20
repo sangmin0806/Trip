@@ -24,35 +24,39 @@ const search = () => {
 </script>
 
 <template>
-    <div class="sidebar" :class="{ active: sidebarActive }">
-        <div class="logo-menu">
-            <h2 class="logo">{{ sidebarStore.input }}</h2>
-        </div>
-        <i
-            :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
-            @click="toggleSidebar"
-        ></i>
-        <ul class="list">
-            <li class="list-item" id="search">
-                <a href="#" :style="{ '--i': 1 }">
-                    <i class="bx bx-search"></i>
-                    <input
-                        type="text"
-                        v-model="sidebarStore.input"
-                        @keyup.enter="search"
-                        class="link-name"
-                        required
-                        placeholder="장소 검색"
-                    />
-                </a>
-            </li>
-        </ul>
-        <div class="scroll">
-            <ul class="list">
-                <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
-            </ul>
-        </div>
+  <div class="sidebar" :class="{ active: sidebarActive }">
+    <i
+      :class="['toggle-btn', sidebarActive ? 'bx bx-chevron-left' : 'bx bx-chevron-right']"
+      @click="toggleSidebar"
+    ></i>
+    <ul class="list">
+      <li class="list-item" id="search">
+        <a href="#" :style="{ '--i': 1 }">
+          <i class="bx bx-search"></i>
+          <input
+            type="text"
+            v-model="sidebarStore.input"
+            @keyup.enter="search"
+            class="link-name"
+            required
+            placeholder="장소 검색"
+          />
+        </a>
+      </li>
+    </ul>
+    <div class="logo-menu">
+      <h2 class="logo">{{ sidebarStore.input }}</h2>
     </div>
+    <div class="heading">
+      <span class="info">여행정보</span>
+    </div>
+    <div class="scroll">
+      <div class="list">
+        <ListItem v-for="(item, index) in response.data" :key="index" :item="item" />
+        <br />
+      </div>
+    </div>
+  </div>
 </template>
 
 <style scoped>

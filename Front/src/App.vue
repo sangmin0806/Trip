@@ -2,7 +2,7 @@
 import { RouterLink, RouterView } from 'vue-router';
 import { ref } from 'vue';
 import Modal from '@/components/user/Modal.vue';
-import { logoutSubmit } from '@/assets/api/user/user';
+import { logoutSubmit } from '@/api/user/user';
 import { useAuthStore } from '@/stores/auth.js';
 const isModalActive = ref(false);
 const loginFormVisible = ref(true);
@@ -45,32 +45,36 @@ function handleRegisterSuccess() {
 </script>
 
 <template>
-    <main>
-        <header>
-            <RouterLink to="/" class="link"><h2 class="logo">Trip</h2></RouterLink>
-            <nav class="navigation">
-                <RouterLink :to="{ name: 'board-list' }" class="link">공지사항</RouterLink>
-                <RouterLink :to="{ name: 'trip' }" class="link">여행지 조회</RouterLink>
-                <RouterLink :to="{ name: 'trip-recommend' }" class="link" v-if="authStore.isLoggedIn"
-                    >추천 코스</RouterLink
-                >
-                <RouterLink :to="{ name: 'my-page' }" class="link" v-if="authStore.isLoggedIn">마이페이지</RouterLink>
-                <button @click="showLoginForm" class="btnLogin-popup" v-if="!authStore.isLoggedIn">Login</button>
-                <button @click="logout" v-if="authStore.isLoggedIn" class="btnLogout-popup">Logout</button>
-            </nav>
-        </header>
-        <Modal
-            :isActive="isModalActive"
-            :loginFormVisible="loginFormVisible"
-            :registerFormVisible="registerFormVisible"
-            @update:loginFormVisible="loginFormVisible = $event"
-            @update:registerFormVisible="registerFormVisible = $event"
-            @close="closeModal"
-            @loginSuccess="handleLoginSuccess"
-            @registerSuccess="handleRegisterSuccess"
-        />
-        <RouterView />
-    </main>
+  <main>
+    <header>
+      <RouterLink to="/" class="link"><h2 class="logo">Trip</h2></RouterLink>
+      <nav class="navigation">
+        <RouterLink :to="{ name: 'board-list' }" class="link">공지사항</RouterLink>
+        <RouterLink :to="{ name: 'trip' }" class="link">여행지 조회</RouterLink>
+        <RouterLink :to="{ name: 'trip-recommend' }" class="link" v-if="authStore.isLoggedIn"
+          >추천 코스</RouterLink
+        >
+        <RouterLink :to="{ name: 'my-page' }" class="link" v-if="authStore.isLoggedIn"
+          >마이페이지</RouterLink
+        >
+        <button @click="showLoginForm" class="btnLogin-popup" v-if="!authStore.isLoggedIn">
+          Login
+        </button>
+        <button @click="logout" v-if="authStore.isLoggedIn" class="btnLogout-popup">Logout</button>
+      </nav>
+    </header>
+    <Modal
+      :isActive="isModalActive"
+      :loginFormVisible="loginFormVisible"
+      :registerFormVisible="registerFormVisible"
+      @update:loginFormVisible="loginFormVisible = $event"
+      @update:registerFormVisible="registerFormVisible = $event"
+      @close="closeModal"
+      @loginSuccess="handleLoginSuccess"
+      @registerSuccess="handleRegisterSuccess"
+    />
+    <RouterView />
+  </main>
 </template>
 
 <style scoped>

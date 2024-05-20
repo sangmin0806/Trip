@@ -1,7 +1,12 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
+<<<<<<< HEAD
 import { loginFormSubmit, registerFormSubmit } from '@/api/user/user.js';
+=======
+import { useAuthStore } from '@/stores/auth';
+import { loginFormSubmit, registerFormSubmit } from '@/assets/api/user/user.js';
+>>>>>>> 970fe4facb19b4966d64c18ed95323ab2bca6257
 
 const props = defineProps({
     isActive: Boolean,
@@ -17,6 +22,7 @@ const emit = defineEmits([
     'registerSuccess',
 ]);
 const router = useRouter();
+const authStore = useAuthStore();
 
 const user = ref({
     userId: '',
@@ -42,6 +48,7 @@ function handleLogin() {
     loginFormSubmit(
         user.value,
         (data) => {
+            authStore.setUserId(user.value.userId); // 로그인 성공 시 userId 저장
             reset();
             emit('loginSuccess');
             router.push(route.path);

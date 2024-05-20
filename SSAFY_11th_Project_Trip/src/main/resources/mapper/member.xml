@@ -15,7 +15,7 @@
 		<result column="user_id" property="userId"/>
 		<result column="user_name" property="userName"/>
 		<result column="user_password" property="userPwd"/>
-		<result column="email" property="emailId"/>
+		<result column="email" property="email"/>
 		<result column="join_date" property="joinDate"/>
 	</resultMap>
 
@@ -62,5 +62,12 @@
 		delete from members
 		where user_id = #{userId}
 	</delete>
+	
+	<!-- 유저 ID로 유저 데이터를 조회하는 쿼리 -->
+    <select id="getUserById" parameterType="string" resultMap="memberAll">
+        select user_id, user_name, user_password, email, join_date
+        from members
+        where user_id = #{userId}
+    </select>
 	
 </mapper>

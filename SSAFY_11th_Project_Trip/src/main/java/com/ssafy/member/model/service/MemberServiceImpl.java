@@ -39,6 +39,11 @@ public class MemberServiceImpl implements MemberService {
 		return memberMapper.loginMember(map);
 	}
 	
+	@Override
+	public MemberDto getUserById(String userId) throws Exception {
+        return memberMapper.getUserById(userId);
+    }
+	
 	/* ADMIN */
 	@Override
 	public List<MemberDto> listMember(Map<String, Object> map) throws Exception {

@@ -7,6 +7,10 @@ import TripRecommend from '@/components/trip/TripRecommend.vue';
 import TripList from '@/components/trip/TripList.vue';
 import UserFrom from '@/components/user/UserForm.vue';
 import { useSidebarStore } from '@/stores/sidebar.js';
+import MyPage from '@/components/myPage/MyPage.vue';
+import UserDetail from '@/components/myPage/UserDetail.vue';
+import UserEdit from '@/components/myPage/UserEdit.vue';
+import { useAuthStore } from '@/stores/auth.js';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -18,9 +22,22 @@ const router = createRouter({
         },
         {
             path: '/mypage',
-            name: 'my-page',
-            component: UserFrom,
-        },
+            name: 'myPage',
+            meta: { requiresAuth: true },
+            component: MyPage,
+            children: [
+              {
+                path: 'detail',
+                name: 'user-detail',
+                component: UserDetail,
+              },
+              {
+                path: 'edit',
+                name: 'user-edit',
+                component: UserEdit,
+              },
+            ],
+          },
         {
             path: '/board',
             name: 'board',
@@ -35,6 +52,7 @@ const router = createRouter({
                 {
                     path: 'view/:articleno',
                     name: 'article-view',
+                    meta: { requiresAuth: true },
                     component: () => import('@/components/board/BoardDetail.vue'),
                 },
                 // {
@@ -45,6 +63,7 @@ const router = createRouter({
                 {
                     path: 'write',
                     name: 'board-write',
+                    meta: { requiresAuth: true },
                     component: () => import('@/components/board/BoardWrite.vue'),
                 },
                 {
@@ -80,5 +99,14 @@ const router = createRouter({
         },
     ],
 });
+
+router.beforeEach((to, from, next) => {
+    const authStore = useAuthStore();
+    if (to.meta.requiresAuth && !authStore.isLoggedIn) {
+      next('/login');
+    } else {
+      next();
+    }
+  });
 
 export default router;

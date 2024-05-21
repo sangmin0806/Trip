@@ -10,6 +10,8 @@
 		<result column="title" property="title"/>
 		<result column="description" property="description"/>
 		<result column="date" property="date"/>
+		<result column="thumbnail_image_id" property="thumbnailImageId"/>
+		
 	</resultMap>
 	
 	<resultMap type="tripDto" id="tripInfo">
@@ -46,8 +48,8 @@
 	</select>
 	
 	<insert id="insertList" parameterType="map" useGeneratedKeys="true" keyProperty="listId">
-		insert into list (user_id, title, description,date)
-    	(select id, #{title}, #{description},#{date}
+		insert into list (user_id, title, description,date,thumbnail_image_id)
+    	(select id, #{title}, #{description},#{date},#{thumbnailImageId}
 	    from members
 	    where user_id = #{userId})
 	</insert>
@@ -63,7 +65,7 @@
 
 	
 	<select id="listTripInfo" parameterType="map" resultMap="tripInfo">
-		select ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude,i.url, ct.type_name, at.tel, at.description, ad.address,
+		select at.thumbnail_image_id, ad.id, at.content_id,ct.content_type_id, at.title,ad.latitude,ad.longitude,i.url, ct.type_name, at.tel, at.description, ad.address,
 		ST_DISTANCE_SPHERE(
         	POINT(ad.longitude, ad.latitude),
         	POINT(#{longitude}, #{latitude})
@@ -89,8 +91,9 @@
 	
 
 	<select id="getPlanLists" parameterType="map" resultMap="planInfo">
-		select l.id,l.user_id,l.title, l.description, l.date
+		select l.id,l.user_id,l.title, l.description, l.date,i.url
 	    from list l
+	    join image i on i.id = l.thumbnail_image_id
 	    join members m on l.user_id = m.id
 	    where m.user_id = #{userId}
 	</select>

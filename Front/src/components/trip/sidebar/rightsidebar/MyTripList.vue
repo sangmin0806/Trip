@@ -3,8 +3,8 @@ import { ref, onMounted, watch } from 'vue';
 import { useSidebarStore } from '@/stores/sidebar.js';
 import { useAuthStore } from '@/stores/auth.js';
 import { registerPlan, getPlanLists } from '@/api/trip/tripList.js';
-import MyTripListItem from './picktrip/MyTripListItem.vue';
-import MyPlanList from './plan/MyPlanList.vue';
+import MyTripItem from './picktrip/MyTripItem.vue';
+import MyPlanItem from './plan/MyPlanItem.vue';
 const sidebarStore = useSidebarStore();
 const authStore = useAuthStore();
 const title = ref('');
@@ -30,11 +30,15 @@ const toggleSidebar = () => {
 };
 
 async function registerPlanHandle() {
+  const firstItem = sidebarStore.tripList[0];
+  console.log(firstItem)
+  const thumbnailImageId = firstItem ? firstItem.thumbnailImageId : null;
     const param = {
         title: title.value,
       description: description.value,
       date:date.value,
         contentIdList: sidebarStore.tripList.map((item) => item.contentId),
+        thumbnailImageId:thumbnailImageId
     };
     registerPlan(
         param,
@@ -97,12 +101,12 @@ watch(
     <div class="scroll">
       <ul class="plan-list" v-if="planActive">
         <li v-for="(item, index) in myPlan" :key="index">
-          <my-plan-list :item="item" @getPlanLists="PlanListsHandle" />
+          <my-plan-item :item="item" @getPlanLists="PlanListsHandle" />
         </li>
       </ul>
       <table class="list" v-if="!planActive">
         <tbody>
-          <my-trip-list-item
+          <my-trip-item
             v-for="(item, index) in sidebarStore.tripList"
             :key="index"
             :item="item"
@@ -114,6 +118,7 @@ watch(
         <div>
           <input type="date" v-model="date" class="date" />
           <input type="text" v-model="title" class="link-name" required placeholder="Plan 이름" />
+          <input type="text" v-model="concept" class="link-name" required placeholder="컨셉" />
           <textarea v-model="description" class="link-name" required placeholder="설명"></textarea>
         </div>
         <button class="save" @click.prevent="registerPlanHandle">

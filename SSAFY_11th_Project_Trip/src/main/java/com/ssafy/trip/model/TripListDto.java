@@ -6,6 +6,20 @@ public class TripListDto {
 	private String title;
 	private String description;
 	private String date;
+	private int thumbnailImageId;
+	private String url;
+	public int getThumbnailImageId() {
+		return thumbnailImageId;
+	}
+	public void setThumbnailImageId(int url) {
+		this.thumbnailImageId = url;
+	}
+	public String getUrl() {
+		return url;
+	}
+	public void setUrl(String url) {
+		this.url = url;
+	}
 	public String getDate() {
 		return date;
 	}

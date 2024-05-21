@@ -1,7 +1,9 @@
-<script setup></script>
+<script setup>
+import TripRecommend from './recommand/TripRecommand.vue';
+</script>
 
 <template>
-  <div></div>
+  <trip-recommend />
 </template>
 
 <style scoped></style>

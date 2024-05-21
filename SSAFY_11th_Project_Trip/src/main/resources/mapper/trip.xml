@@ -9,6 +9,7 @@
 		<result column="user_id" property="userId"/>
 		<result column="title" property="title"/>
 		<result column="description" property="description"/>
+		<result column="date" property="date"/>
 	</resultMap>
 	
 	<resultMap type="tripDto" id="tripInfo">
@@ -45,8 +46,8 @@
 	</select>
 	
 	<insert id="insertList" parameterType="map" useGeneratedKeys="true" keyProperty="listId">
-		insert into list (user_id, title, description)
-    	(select id, #{title}, #{description}
+		insert into list (user_id, title, description,date)
+    	(select id, #{title}, #{description},#{date}
 	    from members
 	    where user_id = #{userId})
 	</insert>
@@ -88,7 +89,7 @@
 	
 
 	<select id="getPlanLists" parameterType="map" resultMap="planInfo">
-		select l.id,l.user_id,l.title, l.description
+		select l.id,l.user_id,l.title, l.description, l.date
 	    from list l
 	    join members m on l.user_id = m.id
 	    where m.user_id = #{userId}

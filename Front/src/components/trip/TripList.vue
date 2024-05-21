@@ -166,13 +166,13 @@ async function itemClickHandle() {
 
 <style scoped>
 .container {
-    padding: 80px 0 0;
+    padding:0;
     position: absolute;
     display: flex;
     flex-direction: column;
     left: 0;
     width: 100%;
-    height: 100%;
+    height: 91%;
     max-width: 2000px;
     max-height: 100%;
 }

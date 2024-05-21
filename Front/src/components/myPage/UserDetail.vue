@@ -13,7 +13,7 @@
 </template>
 
 <script>
-import { fetchUserDetail } from '@/assets/api/myPage/myPage.js';
+import { fetchUserDetail } from '@/api/user/myPage.js';
 import { useAuthStore } from '@/stores/auth.js';
 
 export default {

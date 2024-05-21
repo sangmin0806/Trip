@@ -1,6 +1,6 @@
 <template>
   <div class="carousel-container">
-    <Carousel :wrap-around="true" :transition="2000" :autoplay="50">
+    <Carousel :wrap-around="true" :transition="2000" :autoplay="2000">
       <Slide v-for="(slide, index) in slides" :key="index">
         <div class="carousel__item">
           <img :src="slide" alt="Slide Image" />
@@ -45,14 +45,14 @@ export default defineComponent({
 <style scoped>
 .carousel-container {
   width: 100%; /* 부모 컨테이너가 전체 너비를 차지하도록 설정 */
-  max-width: 1200px; /* 최대 너비 설정 (필요에 따라 조정) */
   margin: 0 auto; /* 중앙 정렬 */
   padding: 20px; /* 내부 여백 설정 */
   box-sizing: border-box; /* 박스 모델 설정 */
+  border-radius: 8px;
 }
 
 .carousel__item {
-  height: 200px; /* 슬라이드 아이템의 높이를 낮게 설정 */
+  height: 300px; /* 슬라이드 아이템의 높이를 낮게 설정 */
   width: 100%; /* 슬라이드 아이템의 너비 설정 */
   background-color: var(--vc-clr-primary);
   color: var(--vc-clr-white);

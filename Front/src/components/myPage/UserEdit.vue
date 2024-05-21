@@ -8,15 +8,33 @@
       </div>
       <div class="form-group">
         <label for="name">Name:</label>
-        <input type="text" v-model="user.userName" id="name" placeholder="Enter your name" required />
+        <input
+          type="text"
+          v-model="user.userName"
+          id="name"
+          placeholder="Enter your name"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="email">Email:</label>
-        <input type="email" v-model="user.email" id="email" placeholder="Enter your email" required />
+        <input
+          type="email"
+          v-model="user.email"
+          id="email"
+          placeholder="Enter your email"
+          required
+        />
       </div>
       <div class="form-group">
         <label for="password">Password:</label>
-        <input type="password" v-model="user.userPwd" id="password" placeholder="Enter your password" required />
+        <input
+          type="password"
+          v-model="user.userPwd"
+          id="password"
+          placeholder="Enter your password"
+          required
+        />
       </div>
       <button type="submit" class="btn-save">Save</button>
     </form>
@@ -24,7 +42,7 @@
 </template>
 
 <script>
-import { fetchUserDetail, updateUserDetail } from '@/assets/api/myPage/myPage.js';
+import { fetchUserDetail, updateUserDetail } from '@/api/user/myPage.js';
 import { useAuthStore } from '@/stores/auth.js';
 
 export default {

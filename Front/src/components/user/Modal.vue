@@ -3,6 +3,7 @@ import { ref, defineProps, defineEmits } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
 import { useAuthStore } from '@/stores/auth';
 import { loginFormSubmit, registerFormSubmit } from '@/api/user/user.js';
+import { IonIcon } from '@ionic/vue';
 
 const props = defineProps({
     isActive: Boolean,

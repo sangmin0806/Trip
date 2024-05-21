@@ -7,9 +7,9 @@
     <div id="intro">
         <div id="title">
             <h1 ref="headline">
-                <span class="titlespan">여</span><span class="fade-out" id="span1">행의 설렘을 담아,</span><br />
-                <span class="titlespan">기</span><span class="fade-out" id="span2">다림 없는 특별한 여정,</span><br />
-                <span class="titlespan">로</span><span class="fade-out" id="span3">망을 현실로 만드는 플랫폼!</span>
+                <span class="titlespan" id="span1">여</span><span class="fade-out" id="span1">행의 설렘을 담아,</span><br />
+                <span class="titlespan" id="span2">기</span><span class="fade-out" id="span2">다림 없는 특별한 여정,</span><br />
+                <span class="titlespan" id="span3">로</span><span class="fade-out" id="span3">망을 현실로 만드는 플랫폼!</span>
             </h1>
         </div>
         <div>
@@ -129,19 +129,34 @@ h1 {
     /* 1초 동안 페이드 아웃 */
 }
 
-#span1 {
+.fade-out#span1 {
     animation: fadeOut 1s forwards;
     animation-delay: 1s;
 }
 
-#span2 {
+.fade-out#span2 {
     animation: fadeOut 1s forwards;
     animation-delay: 2s;
 }
 
-#span3 {
+.fade-out#span3 {
     animation: fadeOut 1s forwards;
     animation-delay: 3s;
+}
+
+.titlespan#span1 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 3.9s;
+}
+
+.titlespan#span2 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 4s;
+}
+
+.titlespan#span3 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 4.1s;
 }
 
 span.titlespan {

@@ -1,16 +1,12 @@
 <script setup>
 import { ref, onMounted } from "vue";
-import { useRouter } from "vue-router";
-import { listArticle } from "@/api/board/board.js";
-
-const router = useRouter();
+import { listArticle2 } from "@/api/board/board.js";
 
 const articles = ref([]);
 const totalArticlesToShow = 5; // 보여줄 게시글 수
 
 const getArticleList = () => {
-  listArticle(
-    { pgno: 1, spp: totalArticlesToShow, key: "", word: "" },
+  listArticle2(
     ({ data }) => {
       articles.value = data.articles.slice(0, totalArticlesToShow);
     },
@@ -24,9 +20,7 @@ onMounted(() => {
   getArticleList();
 });
 
-const goToArticle = (articleNo) => {
-  router.push({ name: "article-detail", params: { articleNo } });
-};
+
 </script>
 
 <template>
@@ -48,13 +42,16 @@ const goToArticle = (articleNo) => {
             </tr>
           </thead>
           <tbody>
-            <tr v-for="(article, index) in articles" :key="article.articleNo" @click="goToArticle(article.articleNo)">
-              <td>{{ index + 1 }}</td>
+            <tr v-for="(article) in articles" :key="article.articleNo">
+              <td>{{ article.articleNo }}</td>
               <th>
-                <a href="#">{{ article.subject }}</a>
+                <router-link :to="{ name: 'article-view', params: { articleno: article.articleNo } }"
+                  class="article-title link-dark">
+                  {{ article.subject }}
+                </router-link>
                 <p>{{ article.user_id }}</p>
               </th>
-              <td>{{ article.regtime }}</td>
+              <td>{{ article.registerTime }}</td>
             </tr>
           </tbody>
         </table>
@@ -65,14 +62,17 @@ const goToArticle = (articleNo) => {
 
 <style scoped>
 .notice {
-  padding: 20px 0; /* 상단 여백 조절 */
-  background-color:  rgba(255, 255, 255, 0.5);
+  padding: 20px 0;
+  /* 상단 여백 조절 */
+  background-color: rgba(255, 255, 255, 0.5);
   border-radius: 15px;
 }
 
 .page-title {
-  margin-bottom: 20px; /* 제목과 테이블 간격 조절 */
+  margin-bottom: 20px;
+  /* 제목과 테이블 간격 조절 */
 }
+
 .page-title h3 {
   font-size: 20px;
   color: #333333;
@@ -81,7 +81,8 @@ const goToArticle = (articleNo) => {
 }
 
 #board-list .container {
-  overflow-y: auto; /* 스크롤 가능하게 설정 */
+  overflow-y: auto;
+  /* 스크롤 가능하게 설정 */
 }
 
 .board-table {
@@ -98,23 +99,26 @@ const goToArticle = (articleNo) => {
   word-break: break-all;
   vertical-align: middle;
 }
+
 .board-table a:hover {
   text-decoration: underline;
 }
+
 .board-table th {
   text-align: center;
 }
 
 .board-table .th-num {
-  width: 50px;
+  width: 20%;
   text-align: center;
 }
 
 .board-table .th-date {
-  width: 100px;
+  width: 20%;
 }
 
-.board-table th, .board-table td {
+.board-table th,
+.board-table td {
   padding: 10px 0;
 }
 
@@ -158,7 +162,8 @@ const goToArticle = (articleNo) => {
   color: #fff;
 }
 
-.btn-dark:hover, .btn-dark:focus {
+.btn-dark:hover,
+.btn-dark:focus {
   background: #373737;
   border-color: #373737;
   color: #fff;
@@ -172,15 +177,18 @@ const goToArticle = (articleNo) => {
   margin: 0;
   box-sizing: border-box;
 }
+
 .clearfix:after {
   content: '';
   display: block;
   clear: both;
 }
+
 .container {
   width: 100%;
   margin: 0 auto;
 }
+
 .blind {
   position: absolute;
   overflow: hidden;

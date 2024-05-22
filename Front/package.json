@@ -15,10 +15,13 @@
     "axios": "^1.7.1",
     "bootstrap": "^5.3.3",
     "pinia": "^2.1.7",
+    "sweetalert2": "^11.11.0",
     "vue": "^3.4.21",
     "vue-router": "^4.3.0",
+    "vue-writer": "^2.0.1",
     "vue3-carousel": "^0.3.3",
-    "vue3-kakao-maps": "^2.3.6"
+    "vue3-kakao-maps": "^2.3.6",
+    "vue3-typer": "^1.0.0"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

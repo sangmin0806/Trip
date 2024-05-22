@@ -1,0 +1,271 @@
+@font-face {
+    font-family: 'WAGURITTF';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/2403@1.0/WAGURITTF.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+@font-face {
+    font-family: 'PartialSansKR-Regular';
+    src: url('https://fastly.jsdelivr.net/gh/projectnoonnu/noonfonts_2307-1@1.1/PartialSansKR-Regular.woff2') format('woff2');
+    font-weight: normal;
+    font-style: normal;
+}
+
+.actions {
+    padding-top: 5vw;
+    padding-bottom: 5vw;
+}
+
+li {
+    list-style: none;
+}
+
+#intro {
+    position: relative;
+    line-height: 1;
+    color: white;
+    text-align: center;
+}
+
+
+
+#title {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: auto;
+    margin: 0 auto;
+}
+
+.side-box {
+    position: absolute;
+    width: 200px;
+    height: 400px;
+    background-color: rgba(0, 0, 0, 0.5); /* 배경색 설정, 필요시 조정 */
+}
+
+#left-box {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+#right-box {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+h1 {
+    text-align: left;
+    margin-top: 5vh;
+    font-size: 5vw;
+    font-family: 'WAGURITTF';
+    text-shadow: 2px 2px gray;
+    margin-bottom: 20px;
+}
+
+#intro>div>p {
+    font-size: 2rem;
+    font-family: 'WAGURITTF';
+    text-shadow: 1px 1px gray;
+}
+
+.titlespan {
+    font-family: 'PartialSansKR-Regular';
+    font-size: 6vw;
+}
+
+/* 애니메이션 정의 */
+@keyframes fadeOut {
+    from {
+        opacity: 1;
+    }
+
+    to {
+        opacity: 0;
+    }
+}
+
+@keyframes centerAnimation {
+    from {
+        transform: translateX(0%);
+        color: white;
+    }
+
+    to {
+        transform: translateX(var(--center-x));
+        color: rgb(4, 4, 109);
+    }
+}
+
+@keyframes smallt {
+    from {
+        color: white;
+    }
+
+    to {
+        color: rgb(4, 4, 109);
+    }
+}
+
+
+.smalltext {
+    animation: smallt 3s forwards;
+    animation-delay: 4s;
+}
+
+.fade-out {
+    display: inline-block;
+}
+
+.fade-out#span1 {
+    animation: fadeOut 1s forwards;
+    animation-delay: 1s;
+}
+
+.fade-out#span2 {
+    animation: fadeOut 1s forwards;
+    animation-delay: 2s;
+}
+
+.fade-out#span3 {
+    animation: fadeOut 1s forwards;
+    animation-delay: 3s;
+}
+
+.titlespan#span1 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 3.9s;
+}
+
+.titlespan#span2 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 4s;
+}
+
+.titlespan#span3 {
+    animation: centerAnimation 1s forwards;
+    animation-delay: 4.1s;
+}
+
+span.titlespan {
+    display: inline-block;
+    animation: centerAnimation 1s forwards;
+    animation-delay: 4s;
+}
+
+.btn-15 {
+    background: #000;
+    color: #fff;
+    z-index: 1;
+}
+
+.btn-15:after {
+    position: absolute;
+    content: "";
+    width: 0;
+    height: 100%;
+    top: 0;
+    right: 0;
+    z-index: -1;
+    background: black;
+    transition: all 0.3s ease;
+}
+
+.btn-15:hover {
+    color: #fff;
+}
+
+.btn-15:hover:after {
+    left: 0;
+    width: 100%;
+}
+
+.btn-15:active {
+    top: 2px;
+}
+
+.custom-btn {
+    width: 130px;
+    height: 40px;
+    padding: 10px 25px;
+    border: 2px solid #000;
+    font-family: 'Lato', sans-serif;
+    font-weight: 500;
+    background: transparent;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    position: relative;
+    display: inline-block;
+    color: black;
+}
+
+#text-main {
+    margin-top: 5vw;
+}
+
+body {
+    background: transparent;
+}
+
+@keyframes blink {
+    40% {
+        opacity: 0.5;
+    }
+
+    80% {
+        opacity: 1;
+    }
+}
+
+.rotated_one_conic_box {
+    position: relative;
+    width: 400px;
+    height: 400px;
+    overflow: hidden;
+    border-radius: 50%;
+    padding: 2rem;
+}
+
+.rotated_one_conic_box::before {
+    content: "";
+    position: absolute;
+    left: -50%;
+    top: -50%;
+    width: 200%;
+    height: 200%;
+    background: conic-gradient(transparent, #a8efff, transparent 30%);
+    animation: rotate 4s linear infinite;
+}
+
+.rotated_one_conic_box::after {
+    content: "";
+    position: absolute;
+    top: 6px;
+    left: 6px;
+    right: 6px;
+    bottom: 6px;
+    background: #b8d2f8;
+    border-radius: 50%;
+}
+
+.rotated_one_conic_box {
+    &::before {
+        content: "";
+        position: absolute;
+        left: -50%;
+        top: -50%;
+        width: 200%;
+        height: 200%;
+        background: conic-gradient(transparent, rgb(0, 0, 0), transparent 30%);
+    }
+}
+
+@keyframes rotate {
+    100% {
+        transform: rotate(1turn);
+    }
+}

@@ -68,7 +68,7 @@ const moveWrite = () => {
   <div class="container">
     <div class="header">
       <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-        <h1 class="sky">글목록</h1>
+        <h1 class="sky">공지사항</h1>
       </h2>
     </div>
     <div class="content">
@@ -84,12 +84,7 @@ const moveWrite = () => {
               <form class="d-flex">
                 <VSelect :selectOption="selectOption" @onKeySelect="changeKey" />
                 <div class="input-group input-group-sm">
-                  <input
-                    type="text"
-                    class="form-control"
-                    v-model="param.word"
-                    placeholder="검색어..."
-                  />
+                  <input type="text" class="form-control" v-model="param.word" placeholder="검색어..." />
                   <button class="btn btn-dark" type="button" @click="getArticleList">검색</button>
                 </div>
               </form>
@@ -106,23 +101,15 @@ const moveWrite = () => {
               </tr>
             </thead>
             <tbody>
-              <BoardListItem
-                v-for="article in articles"
-                :key="article.articleNo"
-                :article="article"
-              ></BoardListItem>
+              <BoardListItem v-for="article in articles" :key="article.articleNo" :article="article"></BoardListItem>
             </tbody>
           </table>
         </div>
-        <PageNavigation
-          :current-page="Number(currentPage)"  
-          :total-page="Number(totalPage)"  
-          @pageChange="onPageChange"
-        ></PageNavigation>
+        <PageNavigation :current-page="Number(currentPage)" :total-page="Number(totalPage)" @pageChange="onPageChange">
+        </PageNavigation>
       </div>
     </div>
   </div>
 </template>
 
-<style scoped>
-</style>
+<style scoped></style>

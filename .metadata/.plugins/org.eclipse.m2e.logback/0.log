@@ -58,3 +58,16 @@
 2024-05-21 10:46:49,693 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
 2024-05-21 10:46:49,706 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
 2024-05-21 10:46:49,765 [Worker-3: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\ssafy\관통\Trip\SSAFY_11th_Project_Trip\src\test\resources
+2024-05-22 08:35:46,863 [Worker-4: Loading available Gradle versions] INFO  o.e.b.c.i.u.g.PublishedGradleVersions - Gradle version information cache is up-to-date. Trying to read.
+2024-05-22 10:31:36,487 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-05-22 10:31:36,512 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
+2024-05-22 10:31:36,540 [Worker-35: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\ssafy\관통\Trip\SSAFY_11th_Project_Trip\src\test\resources
+2024-05-22 10:31:44,538 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-05-22 10:31:44,543 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
+2024-05-22 10:31:44,550 [Worker-31: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\ssafy\관통\Trip\SSAFY_11th_Project_Trip\src\test\resources
+2024-05-22 10:32:09,232 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-05-22 10:32:09,243 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
+2024-05-22 10:32:09,252 [Worker-34: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\ssafy\관통\Trip\SSAFY_11th_Project_Trip\src\test\resources
+2024-05-22 10:41:00,867 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 1 resource from src\main\resources to target\classes
+2024-05-22 10:41:00,871 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - Copying 20 resources from src\main\resources to target\classes
+2024-05-22 10:41:00,879 [Worker-41: Building] INFO  o.a.m.s.f.DefaultMavenResourcesFiltering - skip non existing resourceDirectory C:\ssafy\관통\Trip\SSAFY_11th_Project_Trip\src\test\resources

@@ -1,31 +1,38 @@
 <template>
-    <header>
-        <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap" rel="stylesheet">
-    </header>
-    <!-- Intro -->
-    <div id="intro">
-        <div id="title">
-            <h1 ref="headline">
-                <span class="titlespan" id="span1">여</span><span class="fade-out" id="span1">행의 설렘을 담아,</span><br />
-                <span class="titlespan" id="span2">기</span><span class="fade-out" id="span2">다림 없는 특별한 여정,</span><br />
-                <span class="titlespan" id="span3">로</span><span class="fade-out" id="span3">망을 현실로 만드는 플랫폼!</span>
-            </h1>
-        </div>
-        <div>
-            <p>
-                "여행의 새로운 패러다임을 선도하는 혁신적 여행 추천 플랫폼, 당신만의 특별한 여정을 시작하세요!"
-            </p>
-        </div>
-        <ul class="actions">
-            <li>
-                <button class="custom-btn btn-15" @click="scrollToMain">Read More</button>
-            </li>
-        </ul>
+  <header>
+    <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@500&display=swap"
+      rel="stylesheet"
+    />
+  </header>
+  <!-- Intro -->
+  <div id="intro">
+    <div id="title">
+      <h1 ref="headline">
+        <span class="titlespan" id="span1">여</span
+        ><span class="fade-out" id="span1">행의 설렘을 담아,</span><br />
+        <span class="titlespan" id="span2">기</span
+        ><span class="fade-out" id="span2">다림 없는 특별한 여정,</span><br />
+        <span class="titlespan" id="span3">로</span
+        ><span class="fade-out" id="span3">망을 현실로 만드는 플랫폼!</span>
+      </h1>
     </div>
-    <div id="main">
-        <!-- Main content here -->
+    <div>
+      <p>
+        "여행의 새로운 패러다임을 선도하는 혁신적 여행 추천 플랫폼, 당신만의 특별한 여정을
+        시작하세요!"
+      </p>
     </div>
+    <ul class="actions">
+      <li>
+        <button class="custom-btn btn-15" @click="scrollToMain">More</button>
+      </li>
+    </ul>
+  </div>
+  <div id="main">
+    <!-- Main content here -->
+  </div>
 </template>
 
 <script setup>

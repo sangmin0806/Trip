@@ -6,6 +6,10 @@ function listArticle(param, success, fail) {
   local.get(`/article/list`, { params: param }).then(success).catch(fail);
 }
 
+function listArticle2(success, fail) {
+  local.get(`/article/list/default`).then(success).catch(fail);
+}
+
 function detailArticle(articleno, success, fail) {
   local.get(`/article/view?articleno=${articleno}`).then(success).catch(fail);
 }
@@ -30,6 +34,7 @@ function deleteArticle(articleno, success, fail) {
 
 export {
   listArticle,
+  listArticle2,
   detailArticle,
   registArticle,
   getModifyArticle,

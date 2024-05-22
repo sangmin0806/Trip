@@ -56,6 +56,17 @@ public class BoardServiceImpl implements BoardService {
 	}
 	
 	@Override
+	public List<BoardDto> listArticle() throws Exception {
+	    Map<String, Object> param = new HashMap<>();
+	    param.put("key", "");
+	    param.put("word", "");
+	    param.put("start", 0);
+	    param.put("listsize", 5);  // 기본값 설정
+
+	    return boardMapper.listArticle(param);
+	}
+	
+	@Override
 	public PageNavigation makePageNavigation(Map<String, String> map) throws Exception {
 		PageNavigation pageNavigation = new PageNavigation();
 

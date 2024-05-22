@@ -53,6 +53,7 @@ async function deletePlanHandle() {
               <td>
                 <div class="text-area">
                   <div class="item-info">
+                    <span class="date">{{ item.date }}</span>
                     <strong class="title"> {{ item.title }}</strong>
                     <span class="typeName">{{ item.typeName }}</span>
                   </div>

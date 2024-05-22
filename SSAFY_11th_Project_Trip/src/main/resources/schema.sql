@@ -74,19 +74,13 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 CREATE TABLE `List` (
-<<<<<<< HEAD
-	`id` INT NOT NULL AUTO_INCREMENT 
-	`user_id`	int	NOT NULL,
-	`title`	varchar(30)	NULL,
-	`description`	varchar(100)	NULL
-=======
 	`id` INT NOT NULL AUTO_INCREMENT,
 	`user_id` INT NOT NULL,
 	`title` VARCHAR(30) NULL,
 	`description` VARCHAR(100) NULL,
     `thumbnail_image_id` INT NULL,
 	PRIMARY KEY (`id`)
->>>>>>> eae5f170fa800f9fece9628269b8568f1913840c
+
 );
 
 CREATE TABLE `Attraction_List` (
@@ -275,13 +269,9 @@ ALTER TABLE `Like` ADD CONSTRAINT `FK_Members_TO_Like_1` FOREIGN KEY (
 REFERENCES `Members` (
 	`id`
 );
-<<<<<<< HEAD
 
-=======
-ALTER TABLE list
-ADD CONSTRAINT fk_image_id
-FOREIGN KEY (thumbnail_image_id) REFERENCES image(id);
->>>>>>> eae5f170fa800f9fece9628269b8568f1913840c
+
+
 
 
 INSERT INTO Image (url)
@@ -301,6 +291,9 @@ SET a.description = ad.overview;
 
 -- 외래 키 제약 조건 잠시 해제
 SET FOREIGN_KEY_CHECKS=0;
+ALTER TABLE list
+ADD CONSTRAINT fk_image_id
+FOREIGN KEY (thumbnail_image_id) REFERENCES image(id);
 -- 데이터 삽입
 INSERT INTO Address (content_id, sido_code, gugun_code, address, latitude, longitude)
 SELECT content_id, sido_code, gugun_code, CONCAT(addr1, ' ', addr2), latitude, longitude

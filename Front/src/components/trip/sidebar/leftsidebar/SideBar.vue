@@ -14,7 +14,6 @@ const items = [
     { name: '숙박', id: 32 },
     { name: '쇼핑', id: 38 },
     { name: '음식점', id: 39 },
-    { name: 'e', id: 9 },
 ];
 const handleClick = (item) => {
     store.setContentTypeId(item.id);
@@ -23,25 +22,20 @@ const handleClick = (item) => {
 </script>
 
 <template>
-  <nav class="sidebar">
-    <div class="logo-menu">
-      <i class="bx bx-menu toggle-btn"></i>
-    </div>
+    <nav class="sidebar">
+        <div class="logo-menu">
+            <i class="bx bx-menu toggle-btn"></i>
+        </div>
 
-    <ul class="list">
-      <li
-        class="list-item"
-        v-for="(item, index) in items"
-        :key="index"
-        :style="{ '--i': index + 2 }"
-      >
-        <a href="#" @click.prevent="handleClick(item)">
-          <i class="bx bx-grid-alt"></i>
-          <span class="link-name">{{ item.name }}</span>
-        </a>
-      </li>
-    </ul>
-  </nav>
+        <ul class="list">
+            <li class="list-item" v-for="(item, index) in items" :key="index" :style="{ '--i': index + 2 }">
+                <a href="#" @click.prevent="handleClick(item)">
+                    <i class="bx bx-category-alt"></i>
+                    <span class="link-name">{{ item.name }}</span>
+                </a>
+            </li>
+        </ul>
+    </nav>
 </template>
 
 <style scoped>

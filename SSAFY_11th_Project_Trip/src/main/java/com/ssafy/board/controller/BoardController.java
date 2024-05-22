@@ -103,6 +103,7 @@ public class BoardController {
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
 
+
 	@GetMapping("/list/default")
     public ResponseEntity<?> listDefault() throws Exception {
         log.debug("list default parameters");
@@ -114,7 +115,7 @@ public class BoardController {
 
         return new ResponseEntity<>(response, HttpStatus.OK);
     }
-	
+
 	@GetMapping("/view")
     public ResponseEntity<Map<String, Object>> view(@RequestParam("articleno") int articleNo, @RequestParam Map<String, String> params) throws Exception {
         log.debug("view articleNo : {}", articleNo);

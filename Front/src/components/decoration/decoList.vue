@@ -20,7 +20,6 @@ onMounted(() => {
   getArticleList();
 });
 
-
 </script>
 
 <template>

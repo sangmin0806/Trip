@@ -55,6 +55,11 @@ const router = createRouter({
                     meta: { requiresAuth: true },
                     component: () => import('@/components/board/BoardDetail.vue'),
                 },
+                // {
+                //   path: "view/:articleno",
+                //   name: "board-view",
+                //   component: () => import("@/components/board/BoardDetail.vue"),
+                // },
                 {
                     path: 'write',
                     name: 'board-write',

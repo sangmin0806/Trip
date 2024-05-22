@@ -21,7 +21,8 @@
     "vue-writer": "^2.0.1",
     "vue3-carousel": "^0.3.3",
     "vue3-kakao-maps": "^2.3.6",
-    "vue3-typer": "^1.0.0"
+    "vue3-typer": "^1.0.0",
+    "openai": "^4.47.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^5.0.4",

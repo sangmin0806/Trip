@@ -1,12 +1,8 @@
 <script setup>
 import { ref, defineProps, defineEmits } from 'vue';
 import { useRoute, useRouter } from 'vue-router';
-<<<<<<< HEAD
-import { loginFormSubmit, registerFormSubmit } from '@/api/user/user.js';
-=======
 import { useAuthStore } from '@/stores/auth';
-import { loginFormSubmit, registerFormSubmit } from '@/assets/api/user/user.js';
->>>>>>> 970fe4facb19b4966d64c18ed95323ab2bca6257
+import { loginFormSubmit, registerFormSubmit } from '@/api/user/user.js';
 
 const props = defineProps({
     isActive: Boolean,
@@ -93,84 +89,82 @@ function showRegisterForm() {
 </script>
 
 <template>
-  <div
-    id="Modal"
-    class="wrapper"
-    :class="{ 'active-popup': isActive }"
-    :style="{ height: registerFormVisible ? '600px' : '440px' }"
-    style="z-index: 9999"
-  >
-    <div class="modal-content" :class="{ active: registerFormVisible }">
-      <span class="icon-close" @click="closeModal"><ion-icon name="close"></ion-icon></span>
+    <div
+        id="Modal"
+        class="wrapper"
+        :class="{ 'active-popup': isActive }"
+        :style="{ height: registerFormVisible ? '600px' : '440px' }"
+        style="z-index: 9999"
+    >
+        <div class="modal-content" :class="{ active: registerFormVisible }">
+            <span class="icon-close" @click="closeModal"><ion-icon name="close"></ion-icon></span>
 
-      <div v-if="loginFormVisible" class="form-box login">
-        <h2>Login</h2>
-        <form @submit.prevent="handleLogin">
-          <div class="input-box">
-            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-            <input type="text" v-model="user.userId" name="userId" required />
-            <label>ID</label>
-          </div>
-          <div class="input-box">
-            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-            <input type="password" v-model="user.userPwd" name="userPwd" required />
-            <label>Password</label>
-          </div>
-          <div class="remember-forgot">
-            <label>
-              <input type="checkbox" v-model="user.saveid" name="saveid" /> Remember me
-            </label>
-            <a href="#">Forgot Password?</a>
-          </div>
-          <button type="submit" class="btn">Login</button>
-          <div class="login-register">
-            <p>
-              Don't have an account?
-              <a href="#" @click.prevent="showRegisterForm">Register</a>
-            </p>
-          </div>
-        </form>
-      </div>
+            <div v-if="loginFormVisible" class="form-box login">
+                <h2>Login</h2>
+                <form @submit.prevent="handleLogin">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="text" v-model="user.userId" name="userId" required />
+                        <label>ID</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" v-model="user.userPwd" name="userPwd" required />
+                        <label>Password</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label> <input type="checkbox" v-model="user.saveid" name="saveid" /> Remember me </label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+                    <button type="submit" class="btn">Login</button>
+                    <div class="login-register">
+                        <p>
+                            Don't have an account?
+                            <a href="#" @click.prevent="showRegisterForm">Register</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
 
-      <div v-if="registerFormVisible" class="form-box register">
-        <h2>Registration</h2>
-        <form @submit.prevent="handleRegister">
-          <div class="input-box">
-            <span class="icon"><ion-icon name="person"></ion-icon></span>
-            <input type="text" v-model="user.userId" name="userId" required />
-            <label>ID</label>
-          </div>
-          <div class="input-box">
-            <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
-            <input type="password" v-model="user.userPwd" name="userPwd" required />
-            <label>Password</label>
-          </div>
-          <div class="input-box">
-            <span class="icon"><ion-icon name="person"></ion-icon></span>
-            <input type="text" v-model="user.userName" name="userName" required />
-            <label>Username</label>
-          </div>
-          <div class="input-box">
-            <span class="icon"><ion-icon name="mail"></ion-icon></span>
-            <input type="email" v-model="user.email" name="email" required />
-            <label>Email</label>
-          </div>
-          <div class="remember-forgot">
-            <label>
-              <input type="checkbox" v-model="user.agree" /> I agree to the terms & conditions
-            </label>
-          </div>
-          <button type="submit" class="btn">Register</button>
-          <div class="login-register">
-            <p>
-              Already have an account?
-              <a href="#" @click.prevent="showLoginForm">Login</a>
-            </p>
-          </div>
-        </form>
-      </div>
+            <div v-if="registerFormVisible" class="form-box register">
+                <h2>Registration</h2>
+                <form @submit.prevent="handleRegister">
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person"></ion-icon></span>
+                        <input type="text" v-model="user.userId" name="userId" required />
+                        <label>ID</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="lock-closed"></ion-icon></span>
+                        <input type="password" v-model="user.userPwd" name="userPwd" required />
+                        <label>Password</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="person"></ion-icon></span>
+                        <input type="text" v-model="user.userName" name="userName" required />
+                        <label>Username</label>
+                    </div>
+                    <div class="input-box">
+                        <span class="icon"><ion-icon name="mail"></ion-icon></span>
+                        <input type="email" v-model="user.email" name="email" required />
+                        <label>Email</label>
+                    </div>
+                    <div class="remember-forgot">
+                        <label>
+                            <input type="checkbox" v-model="user.agree" /> I agree to the terms & conditions
+                        </label>
+                    </div>
+                    <button type="submit" class="btn">Register</button>
+                    <div class="login-register">
+                        <p>
+                            Already have an account?
+                            <a href="#" @click.prevent="showLoginForm">Login</a>
+                        </p>
+                    </div>
+                </form>
+            </div>
+        </div>
     </div>
-  </div>
 </template>
 
 <style scoped>

@@ -103,7 +103,8 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-      next('/login');
+        alert("로그인 해야 열람할 수 있는 페이지 입니다.");
+      next('/');
     } else {
       next();
     }

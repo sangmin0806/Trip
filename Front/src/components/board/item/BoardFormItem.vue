@@ -1,14 +1,15 @@
 <script setup>
-import { ref, watch } from "vue"
-import { useRoute, useRouter } from "vue-router"
-import { registArticle, getModifyArticle, modifyArticle } from "@/assets/api/board/board"
+import { ref, watch, onMounted } from "vue";
+import { useRoute, useRouter } from "vue-router";
+import { registArticle, getModifyArticle, modifyArticle } from "@/api/board/board.js";
+import { useAuthStore } from "@/stores/auth.js"; // Auth Store를 불러옵니다.
 
-const router = useRouter()
-const route = useRoute()
+const router = useRouter();
+const route = useRoute();
 
-const props = defineProps({ type: String })
+const props = defineProps({ type: String });
 
-const isUseId = ref(false)
+const isUseId = ref(false);
 
 const article = ref({
   articleNo: 0,
@@ -18,91 +19,96 @@ const article = ref({
   userName: "",
   hit: 0,
   registerTime: "",
-})
+});
+
+// Auth Store에서 사용자 ID를 가져와서 설정합니다.
+const authStore = useAuthStore();
+onMounted(() => {
+  if (authStore.userId) {
+    article.value.userId = authStore.userId;
+    isUseId.value = true; // 작성자 ID 입력 필드를 비활성화합니다.
+  }
+});
 
 if (props.type === "modify") {
-  let { articleno } = route.params
-  console.log(articleno + "번글 얻어와서 수정할거야")
+  let { articleno } = route.params;
+  console.log(articleno + "번글 얻어와서 수정할거야");
   getModifyArticle(
     articleno,
     ({ data }) => {
-      article.value = data.article
-      isUseId.value = true
+      article.value = data.article;
+      isUseId.value = true;
     },
     (error) => {
-      console.log(error)
+      console.log(error);
     }
-  )
-  isUseId.value = true
+  );
+  isUseId.value = true;
 }
 
-const subjectErrMsg = ref("")
-const contentErrMsg = ref("")
+const subjectErrMsg = ref("");
+const contentErrMsg = ref("");
 watch(
   () => article.value.subject,
   (value) => {
-    let len = value.length
+    let len = value.length;
     if (len == 0 || len > 30) {
-      subjectErrMsg.value = "제목을 확인해 주세요!!!"
-    } else subjectErrMsg.value = ""
+      subjectErrMsg.value = "제목을 확인해 주세요!!!";
+    } else subjectErrMsg.value = "";
   },
   { immediate: true }
-)
+);
 watch(
   () => article.value.content,
   (value) => {
-    let len = value.length
+    let len = value.length;
     if (len == 0 || len > 500) {
-      contentErrMsg.value = "내용을 확인해 주세요!!!"
-    } else contentErrMsg.value = ""
+      contentErrMsg.value = "내용을 확인해 주세요!!!";
+    } else contentErrMsg.value = "";
   },
   { immediate: true }
-)
+);
 
 function onSubmit() {
-  // event.preventDefault();
-
   if (subjectErrMsg.value) {
-    alert(subjectErrMsg.value)
+    alert(subjectErrMsg.value);
   } else if (contentErrMsg.value) {
-    alert(contentErrMsg.value)
+    alert(contentErrMsg.value);
   } else {
-    props.type === "regist" ? writeArticle() : updateArticle()
+    props.type === "regist" ? writeArticle() : updateArticle();
   }
 }
 
 function writeArticle() {
-  console.log("글등록하자!!", article.value)
+  console.log("글등록하자!!", article.value);
   registArticle(
     article.value,
     (response) => {
-      let msg = "글등록 처리시 문제 발생했습니다."
-      if (response.status == 201) msg = "글등록이 완료되었습니다."
-      alert(msg)
-      moveList()
+      let msg = "글등록 처리시 문제 발생했습니다.";
+      if (response.status == 201) msg = "글등록이 완료되었습니다.";
+      alert(msg);
+      moveList();
     },
     (error) => console.log(error)
-  )
+  );
 }
 
 function updateArticle() {
-  console.log(article.value.articleNo + "번글 수정하자!!", article.value)
+  console.log(article.value.articleNo + "번글 수정하자!!", article.value);
   modifyArticle(
     article.value,
     (response) => {
-      let msg = "글수정 처리시 문제 발생했습니다."
-      if (response.status == 200) msg = "글정보 수정이 완료되었습니다."
-      alert(msg)
-      moveList()
-      // router.push({ name: "article-view" });
-      // router.push(`/board/view/${article.value.articleNo}`);
+      let msg = "글수정 처리시 문제 발생했습니다.";
+      if (response.status == 200) msg = "글정보 수정이 완료되었습니다.";
+      alert(msg);
+      moveList();
     },
     (error) => console.log(error)
-  )
+  );
 }
 
 function moveList() {
-  router.replace({ name: "board-list" })
+  router.replace({ name: "board-list" });
 }
 </script>
 
@@ -138,4 +144,6 @@ function moveList() {
   </form>
 </template>
 
-<style scoped></style>
+<style scoped>
+/* 스타일 코드는 필요에 따라 추가 또는 수정하세요 */
+</style>

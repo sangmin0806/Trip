@@ -68,7 +68,7 @@ function onDeleteArticle() {
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm text-center title">
-          <mark class="sky">글보기</mark>
+          <div class="sky">여행후기</div>
         </h2>
       </div>
       <div class="col-lg-10 text-start content-wrapper">

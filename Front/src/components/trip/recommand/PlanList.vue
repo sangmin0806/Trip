@@ -16,17 +16,17 @@ async function toggle() {
 </script>
 
 <template>
-    <figure class="card" :class="['card', { expanded: planActive }]">
-        <div class="image"><img :src="item.url" alt="image" /></div>
-        <figcaption>
-            <h3>{{ item.title }}</h3>
-            <div v-if="planActive">
-                <p>{{ item.description }}</p>
-            </div>
-        </figcaption>
-    </figure>
+  <figure class="card" :class="['card', { expanded: planActive }]">
+    <div class="image"><img :src="item.url" alt="image" /></div>
+    <figcaption>
+      <h3>{{ item.title }}</h3>
+      <div v-if="planActive">
+        <p>{{ item.description }}</p>
+      </div>
+    </figcaption>
+  </figure>
 
-    <a @click.prevent="toggle">더 보기</a>
+  <a @click.prevent="toggle">More</a>
 </template>
 
 <style scoped>
@@ -34,7 +34,7 @@ async function toggle() {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    font-family: 'Lato', sans-serif;
+    font-family: 'YeongdeokSea', 'Permanent Marker', sans-serif;
 }
 
 .card {
@@ -44,7 +44,7 @@ async function toggle() {
     align-items: center;
     color: #000;
     max-width: 350px;
-    min-width: 25;
+    min-width: 300px;
     margin: 10px;
     background: transparent;
     overflow: hidden;
@@ -52,12 +52,12 @@ async function toggle() {
     box-shadow: 10px 10px 15px #7f8080;
 }
 .card.expanded {
-    width: 500px;
+    width: 350px;
 }
 .card img {
     position: relative;
-    width: 400px;
-    height: 300px;
+    width: 300px;
+    height: 250px;
     vertical-align: top;
     transition: 0.25s ease;
 }
@@ -81,12 +81,13 @@ async function toggle() {
     bottom: 0;
     left: 0;
     right: 0;
-    background: linear-gradient(90deg, #b2c4c9, #fff);
+    background: linear-gradient(90deg, #7aa9b6, #fff);
     opacity: 0.8;
     z-index: -1;
 }
 .card h3 {
     display: inline-block;
+
     margin-bottom: 5px;
 }
 .card p {
@@ -99,14 +100,15 @@ async function toggle() {
     display: inline-block;
     font-size: 0.75em;
     color: #fff;
-    background: #413b3b;
+    background: rgb(143, 143, 143);
     padding: 5px 10px;
     text-decoration: none;
     border-radius: 6px;
     z-index: 1;
     transition: 0.5s;
+    cursor: pointer;
 }
 .card a:hover {
-    background: #242020;
+    background: #7f8080;
 }
 </style>

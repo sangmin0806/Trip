@@ -1,20 +1,20 @@
 <template>
-    <div class="home-container">
-        <div class="decoIntro">
-            <decoIntro />
-        </div>
-        <div class="top-section">
-            <div class="left-component">
-                <decoList />
-            </div>
-            <div class="right-component">
-                <secondComponent />
-            </div>
-        </div>
-        <div class="full-width">
-            <carouselPicture />
-        </div>
+  <div class="home-container">
+    <div class="decoIntro">
+      <decoIntro />
     </div>
+    <div class="top-section">
+      <div class="left-component">
+        <decoList />
+      </div>
+      <!-- <div class="right-component">
+                <secondComponent />
+            </div> -->
+    </div>
+    <div class="full-width">
+      <carouselPicture />
+    </div>
+  </div>
 </template>
 
 <script setup>
@@ -31,13 +31,14 @@ import decoIntro from '@/components/decoration/decoIntro.vue';
 
 .top-section {
     display: flex;
+    width: 100%;
     justify-content: space-between;
     padding: 20px;
 }
 
 .left-component,
 .right-component {
-    width: 48%;
+    width: 100%;
     height: 400px;
 }
 

@@ -1,7 +1,7 @@
 <script setup>
 import { KakaoMap, KakaoMapMarker } from 'vue3-kakao-maps';
 import { useSidebarStore } from '@/stores/sidebar.js';
-import { ref } from 'vue';
+import { onMounted, ref } from 'vue';
 import { search, getLocation } from '@/api/trip/tripSearch.js';
 import SideBar from './sidebar/leftsidebar/SideBar.vue';
 import SideList from './sidebar/leftsidebar/SideList.vue';
@@ -13,10 +13,20 @@ const map = ref();
 const markerList = ref([]);
 const searchResponse = ref({ response: { data: [] } });
 
+
 const onLoadKakaoMap = (mapRef) => {
     map.value = mapRef;
 };
+function getNaverMapUrl(title) {
+  return `https://map.naver.com/v5/search/${encodeURIComponent(title)}`;
+}
+function closeInfoWindow(index) {
+    const markerItem = markerList.value[index];
+    markerItem.infoWindow.visible = false;
+}
+
 const placesSearchCB = (data) => {
+
     markerList.value = [];
     const bounds = new kakao.maps.LatLngBounds();
     for (let marker of data) {
@@ -24,7 +34,24 @@ const placesSearchCB = (data) => {
             lat: marker.latitude,
             lng: marker.longitude,
             infoWindow: {
-                content: marker.title,
+                content: `
+                <div style="padding: 10px; background-color: white; border: 1px solid #ccc; border-radius: 5px">
+                    <div style="font-weight: bold; margin-bottom: 5px">
+                        ${marker.title}
+                        <span class="close-button" style="float: right; cursor: pointer" data-index="${markerList.value.length}" title="닫기">X</span>
+                    </div>
+                    <div style="display: flex">
+                        <div style="margin-right: 10px">
+                            <img src="${marker.imageUrl}" width="73" height="70" />
+                        </div>
+                        <div style="flex-grow: 1">
+                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">주소 : ${marker.address}</div>
+                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">유형 : ${marker.typeName}</div>
+                            <div style="overflow: hidden; text-overflow: ellipsis; white-space: nowrap">tel : ${marker.tel}</div>
+                            <div><a href="${getNaverMapUrl(marker.title)}" target="_blank" style="color: blue">네이버 지도 검색</a></div>
+                        </div>
+                    </div>
+                </div>`,
                 visible: false,
             },
         };
@@ -33,6 +60,7 @@ const placesSearchCB = (data) => {
         bounds.extend(new kakao.maps.LatLng(Number(marker.latitude), Number(marker.longitude)));
     }
     map.value?.setBounds(bounds);
+
 };
 
 const onClickMapMarker = (markerItem) => {
@@ -41,11 +69,11 @@ const onClickMapMarker = (markerItem) => {
     } else {
         markerItem.infoWindow.visible = true;
     }
+
 };
 
 async function searchHandle() {
     const input = sidebarStore.input;
-    console.log(input);
     const locateParam = {
         input: input,
     };
@@ -77,7 +105,6 @@ async function searchHandle() {
                 return;
             }
             sidebarStore.setSidebarActive(true);
-            console.log(response);
 
             searchResponse.value = {
                 response: response,
@@ -124,7 +151,6 @@ async function itemClickHandle() {
                 return;
             }
             sidebarStore.setSidebarActive(true);
-            console.log(response);
             searchResponse.value = {
                 response: response,
             };
@@ -135,6 +161,15 @@ async function itemClickHandle() {
         }
     );
 }
+
+onMounted(() => {
+    document.addEventListener('click', (event) => {
+        if (event.target.classList.contains('close-button')) {
+            const index = event.target.getAttribute('data-index');
+            closeInfoWindow(index);
+        }
+    });
+});
 </script>
 
 <template>
@@ -153,13 +188,14 @@ async function itemClickHandle() {
     >
       <KakaoMapMarker
         v-for="(marker, index) in markerList"
-        :key="marker.key === undefined ? index : marker.key"
+        :key="marker.key === undefined ? index :
+      marker.key"
         :lat="marker.lat"
         :lng="marker.lng"
         :infoWindow="marker.infoWindow"
         :clickable="true"
         @onClickKakaoMapMarker="onClickMapMarker(marker)"
-      ></KakaoMapMarker>
+      />
     </KakaoMap>
   </div>
 </template>
@@ -185,5 +221,9 @@ async function itemClickHandle() {
 .kakao-map {
     width: 100% !important;
     height: 100% !important;
+}
+.kakao-overlay{
+    position: absolute;
+    z-index: 1000;
 }
 </style>

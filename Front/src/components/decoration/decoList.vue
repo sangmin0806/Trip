@@ -19,14 +19,13 @@ const getArticleList = () => {
 onMounted(() => {
   getArticleList();
 });
-
 </script>
 
 <template>
   <section class="notice">
     <div class="page-title">
       <div class="container">
-        <h3>최신 공지사항</h3>
+        <h3>최근 여행후기⛱</h3>
       </div>
     </div>
     <!-- board list area -->
@@ -44,8 +43,10 @@ onMounted(() => {
             <tr v-for="(article) in articles" :key="article.articleNo">
               <td>{{ article.articleNo }}</td>
               <th>
-                <router-link :to="{ name: 'article-view', params: { articleno: article.articleNo } }"
-                  class="article-title link-dark">
+                <router-link
+                  :to="{ name: 'article-view', params: { articleno: article.articleNo } }"
+                  class="article-title link-dark"
+                >
                   {{ article.subject }}
                 </router-link>
                 <p>{{ article.user_id }}</p>

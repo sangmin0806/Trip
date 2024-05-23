@@ -75,6 +75,7 @@ img {
     white-space: nowrap;
     overflow: hidden;
     text-overflow: ellipsis;
+    background: transparent;
     font-size: 20px;
     font-weight: 700;
     color: rgb(0, 104, 195);

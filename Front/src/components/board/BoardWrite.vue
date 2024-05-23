@@ -6,8 +6,8 @@ import BoardFormItem from "./item/BoardFormItem.vue";
   <div class="container">
     <div class="row justify-content-center">
       <div class="col-lg-10">
-        <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글쓰기</mark>
+        <h2 class="my-3 py-3 shadow-sm  text-center">
+          <div class="sky">후기작성</div>
         </h2>
       </div>
       <div class="col-lg-10 text-start">

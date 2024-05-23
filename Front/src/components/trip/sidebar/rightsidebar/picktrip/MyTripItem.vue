@@ -12,32 +12,32 @@ const props = defineProps({
 </script>
 
 <template>
-    <tr>
-        {{
+  <tr>
+    {{
             index + 1
-        }}
-        <td colspan="3">
-            <div class="row-content">
-                <span><img :src="item.imageUrl" alt="Image" /></span>
-                <td>
-                    <div class="text-area">
-                        <div class="item-info">
-                            <strong class="title"> {{ item.title }}</strong>
-                            <span class="typeName">{{ item.typeName }}</span>
-                        </div>
-                        <i class="bx bx-trash" @click.prevent="sidebarStore.removeTrip(item.contentId)"></i>
-                    </div>
-                </td>
+    }}
+    <td colspan="3">
+      <div class="row-content">
+        <span><img :src="item.imageUrl" alt="Image" /></span>
+        <td>
+          <div class="text-area">
+            <div class="item-info">
+              <strong class="title"> {{ item.title }}</strong>
+              <span class="typeName">{{ item.typeName }}</span>
             </div>
+            <i class="bx bx-trash" @click.prevent="sidebarStore.removeTrip(item.contentId)"></i>
+          </div>
         </td>
-    </tr>
+      </div>
+    </td>
+  </tr>
 </template>
 
 <style scoped>
 .row-content {
     display: flex;
     align-items: center;
-    border: 2px solid white; /* 각 tr 요소에 테두리 추가 */
+    border: 2px solid white;
     border-radius: 5px;
 }
 tr {
@@ -51,6 +51,7 @@ td {
 }
 .title {
     max-height: 80px;
+    background: transparent;
     text-overflow: ellipsis;
 }
 

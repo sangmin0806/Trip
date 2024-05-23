@@ -7,7 +7,7 @@ import BoardFormItem from "./item/BoardFormItem.vue";
     <div class="row justify-content-center">
       <div class="col-lg-10">
         <h2 class="my-3 py-3 shadow-sm bg-light text-center">
-          <mark class="sky">글수정</mark>
+          <div class="sky">후기글수정</div>
         </h2>
       </div>
       <div class="col-lg-10 text-start">

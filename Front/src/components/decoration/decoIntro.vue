@@ -1,26 +1,28 @@
 <template>
-    <header></header>
-    <!-- Intro -->
-    <div id="intro">
-        <div id="title">
-            <h1 ref="headline">
-                <span class="titlespan" id="span1">나</span><span class="fade-out" id="span1">의 특별한 여정,</span><br />
-                <span class="titlespan" id="span2">침</span><span class="fade-out" id="span2">착한 시간 속에서,</span><br />
-                <span class="titlespan" id="span3">반</span><span class="fade-out" id="span3">짝이는 여정을 떠나요!</span>
-            </h1>
-        </div>
-        <div id="text-main">
-            <p class="smalltext" ref="smalltext"></p>
-        </div>
-        <div class="actions">
-            <button class="custom-btn btn-15" @click="scrollToMain">Scroll</button>
-        </div>
+  <header></header>
+  <!-- Intro -->
+  <div id="intro">
+    <div id="title">
+      <h1 ref="headline">
+        <span class="titlespan" id="span1">나</span
+        ><span class="fade-out" id="span1">의 특별한 여정,</span><br />
+        <span class="titlespan" id="span2">침</span
+        ><span class="fade-out" id="span2">착한 시간 속에서,</span><br />
+        <span class="titlespan" id="span3">반</span
+        ><span class="fade-out" id="span3">짝이는 여정을 떠나요!</span>
+      </h1>
     </div>
-    <div id="main">
-        <!-- Main content here -->
+    <div id="text-main">
+      <p class="smalltext" ref="smalltext"></p>
     </div>
+    <div class="actions">
+      <button class="custom-btn btn-15" @click="scrollToMain">아래로</button>
+    </div>
+  </div>
+  <div id="main">
+    <!-- Main content here -->
+  </div>
 </template>
-
 
 <script setup>
 import { ref, onMounted } from 'vue';
@@ -56,7 +58,6 @@ onMounted(() => {
     document.documentElement.style.setProperty('--center-x', `${centerX}px`);
 });
 </script>
-
 
 <style scoped>
 @import url('@/assets/css/decoration/DecoMain.css');

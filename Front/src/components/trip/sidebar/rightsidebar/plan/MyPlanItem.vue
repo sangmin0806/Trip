@@ -5,6 +5,7 @@ import { getPlan, deletePlan } from '@/api/trip/tripList';
 const plan = ref({ data: [] });
 const emit = defineEmits(['getPlanLists']);
 const planActive = ref(false);
+const sidebarStore = useSidebarStore();
 const props = defineProps({
     planList: {
         type: Object,
@@ -24,7 +25,7 @@ async function planListHandle() {
 }
 async function deletePlanHandle() {
     deletePlan(
-        parseInt(props.item.id),
+        parseInt(props.planList.id),
         (response) => {
             emit('getPlanLists');
             planActive.value = !planActive.value;
@@ -35,45 +36,46 @@ async function deletePlanHandle() {
 </script>
 
 <template>
-    <div class="container">
-        <div class="date">📅 {{ planList.date }}</div>
-        <h2 class="plan">{{ planList.title }} 일정</h2>
-        <div class="title">
-            <span><img class="image" :src="planList.url" @click="planListHandle" alt="Image" /></span>
+  <div class="container">
+    <div class="date">📅 {{ planList.date }}</div>
+    <h2 class="plan">{{ planList.title }} 일정</h2>
+    <div class="title">
+      <span><img class="image" :src="planList.url" @click="planListHandle" alt="Image" /></span>
 
-            <div class="description" @click="planListHandle">{{ planList.description }}</div>
-            <i class="bx bx-trash" @click.prevent="deletePlanHandle"></i>
-        </div>
-
-        <table v-if="planActive">
-            <tbody>
-                <tr v-for="(item, index) in plan" :key="index">
-                    {{
-                        index + 1
-                    }}
-                    <td colspan="3">
-                        <div class="row-content">
-                            <span><img :src="item.imageUrl" alt="Image" /></span>
-                            <td>
-                                <div class="text-area">
-                                    <div class="item-info">
-                                        <span class="date">{{ item.date }}</span>
-                                        <strong class="trip-title"> {{ item.title }}</strong>
-                                        <span class="typeName">{{ item.typeName }}</span>
-                                    </div>
-                                    <i class="bx bx-trash" @click.prevent="sidebarStore.removeTrip(item.contentId)"></i>
-                                </div>
-                            </td>
-                        </div>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
+      <div class="description" @click="planListHandle">{{ planList.description }}</div>
+      <i class="bx bx-trash" @click.prevent="deletePlanHandle"></i>
     </div>
+
+    <table v-if="planActive">
+      <tbody>
+        <tr v-for="(item, index) in plan" :key="index">
+          {{
+                        index + 1
+          }}
+          <td colspan="3">
+            <div class="row-content">
+              <span><img :src="item.imageUrl" alt="Image" /></span>
+              <td>
+                <div class="text-area">
+                  <div class="item-info">
+                    <span class="date">{{ item.date }}</span>
+                    <strong class="trip-title"> {{ item.title }}</strong>
+                    <span class="typeName">{{ item.typeName }}</span>
+                  </div>
+                  <i class="bx bx-trash"></i>
+                </div>
+              </td>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
 </template>
 
 <style scoped>
 .container {
+    height: 100%;
     margin-bottom: 20px;
 }
 

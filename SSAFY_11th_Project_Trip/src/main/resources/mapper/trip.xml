@@ -108,7 +108,7 @@
 	</delete>
 	
 	<select id="listTripInfoById" parameterType="int" resultMap="tripInfo">
-		select at.title, i.url, at.description
+		select at.title, i.url, at.description, at.content_id
 	    from attraction at
 	    join image i on at.thumbnail_image_id = i.id
 	    where at.content_id in (

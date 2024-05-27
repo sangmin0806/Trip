@@ -5,12 +5,12 @@ import BoardView from '@/views/BoardView.vue';
 import TripView from '@/views/TripView.vue';
 import TripRecommend from '@/components/trip/TripRecommend.vue';
 import TripList from '@/components/trip/TripList.vue';
-import UserFrom from '@/components/user/UserForm.vue';
 import { useSidebarStore } from '@/stores/sidebar.js';
 import MyPage from '@/components/myPage/MyPage.vue';
 import UserDetail from '@/components/myPage/UserDetail.vue';
 import UserEdit from '@/components/myPage/UserEdit.vue';
 import { useAuthStore } from '@/stores/auth.js';
+import MyChatt from '@/components/myPage/MyChatt.vue';
 
 const router = createRouter({
     history: createWebHistory(import.meta.env.BASE_URL),
@@ -21,23 +21,28 @@ const router = createRouter({
             component: HomeView,
         },
         {
+            path: '/mychatt',
+            name: 'mychatt',
+            component: MyChatt,
+        },
+        {
             path: '/mypage',
             name: 'myPage',
             meta: { requiresAuth: true },
             component: MyPage,
             children: [
-              {
-                path: 'detail',
-                name: 'user-detail',
-                component: UserDetail,
-              },
-              {
-                path: 'edit',
-                name: 'user-edit',
-                component: UserEdit,
-              },
+                {
+                    path: 'detail',
+                    name: 'user-detail',
+                    component: UserDetail,
+                },
+                {
+                    path: 'edit',
+                    name: 'user-edit',
+                    component: UserEdit,
+                },
             ],
-          },
+        },
         {
             path: '/board',
             name: 'board',
@@ -103,11 +108,11 @@ const router = createRouter({
 router.beforeEach((to, from, next) => {
     const authStore = useAuthStore();
     if (to.meta.requiresAuth && !authStore.isLoggedIn) {
-        alert("로그인 해야 열람할 수 있는 페이지 입니다.");
-      next('/');
+        alert('로그인 해야 열람할 수 있는 페이지 입니다.');
+        next('/');
     } else {
-      next();
+        next();
     }
-  });
+});
 
 export default router;

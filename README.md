@@ -22,7 +22,7 @@
 
 ## 3. 기술스택
 
-
+ ![slide1.jpg](readmeImg/slide1.jpg)
 
 ## 4. 화면 설계서
 

@@ -6,15 +6,15 @@
 
 2.	여행계획 관리 유스케이스
 
- ![image-2.png](readmeImg/image-2.png)
+<img src="readmeImg/image-2.png" alt="여행계획 관리 유스케이스" width="400">
 
 3.	추천 코스 유스케이스
 
- ![image-3.png](readmeImg/image-3.png)
+<img src="readmeImg/image-3.png" alt="추천 코스 유스케이스" width="400">
 
 4.	기본관리 유스케이스
 
- ![image-4.png](readmeImg/image-4.png)
+<img src="readmeImg/image-4.png" alt="기본관리 유스케이스" width="400">
 
 ## 2. 테이블 구조도 ERD
 

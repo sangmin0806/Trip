@@ -20,6 +20,10 @@
 
  ![image-5.png](readmeImg/image-5.png)
 
+## 3. 기술스택
+
+
+
 ## 4. 화면 설계서
 
 ### 메인 페이지

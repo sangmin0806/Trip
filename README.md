@@ -2,7 +2,7 @@
 ## 1.	유스케이스
  1.	메인화면 유스케이스
 
- ![image-1.png](readmeImg/image-1.png)
+<img src="readmeImg/image-1.png" alt="메인화면 유스케이스" width="400">
 
 2.	여행계획 관리 유스케이스
 

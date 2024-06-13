@@ -20,17 +20,6 @@
 
  ![image-5.png](readmeImg/image-5.png)
 
-## 3. 클래스 다이어그램
-
- ![image-6.png](readmeImg/image-6.png)
-
- ![image-7.png](readmeImg/image-7.png)
-
- ![image-8.png](readmeImg/image-8.png)
-
- ![image-9.png](readmeImg/image-9.png)
-
-
 ## 4. 화면 설계서
 
 ### 메인 페이지

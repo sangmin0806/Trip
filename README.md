@@ -1,5 +1,9 @@
+## 프로젝트 개요
 
-## 1.	유스케이스
+## 주요기능
+
+## 유스케이스
+
  1.	메인화면 유스케이스
 
 <img src="readmeImg/image-1.png" alt="메인화면 유스케이스" width="400">
@@ -16,15 +20,15 @@
 
 <img src="readmeImg/image-4.png" alt="기본관리 유스케이스" width="400">
 
-## 2. 테이블 구조도 ERD
+## 테이블 구조도 ERD
 
  ![image-5.png](readmeImg/image-5.png)
 
-## 3. 기술스택
+## 기술스택
 
 <img src="readmeImg/Slide1.jpg" alt="기술스택" width="700">
 
-## 4. 화면 설계서
+## 화면 설계서
 
 ### 메인 페이지
 
